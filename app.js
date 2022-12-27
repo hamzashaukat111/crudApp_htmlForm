@@ -57,27 +57,67 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/form.html"));
 });
 
-// Add
+//nechay delete later, hai add wala
+
 app.post("/add", function (req, res) {
-  db.serialize(() => {
-    db.run(
-      "INSERT INTO emp(id,name) VALUES(?,?)",
-      [req.body.id, req.body.name],
-      function (err) {
-        if (err) {
-          return console.log(err.message);
+  async function kk() {
+    let con;
+
+    try {
+      con = await oracledb.getConnection({
+        user: "system",
+        password: "Hamza123",
+        connectString: "localhost/orcl",
+      });
+
+      const data = await con.execute(
+        "INSERT INTO USER_T(naam,numberr) VALUES(:naam,:numberr)",
+        [req.body.naam, req.body.numberr],
+        function (err) {
+          if (err) {
+            return console.log(err.message);
+          }
+          console.log("New employee has been added");
+          res.send(
+            "New employee has been added into the database with ID = " +
+              req.body.naam +
+              " and Name = " +
+              req.body.numberr
+          );
         }
-        console.log("New employee has been added");
-        res.send(
-          "New employee has been added into the database with ID = " +
-            req.body.id +
-            " and Name = " +
-            req.body.name
-        );
-      }
-    );
-  });
+      );
+
+      con.commit();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  kk();
 });
+
+//nechay orginial add wala
+
+// Add
+// app.post("/add", function (req, res) {
+//   db.serialize(() => {
+//     db.run(
+//       "INSERT INTO emp(id,name) VALUES(?,?)",
+//       [req.body.id, req.body.name],
+//       function (err) {
+//         if (err) {
+//           return console.log(err.message);
+//         }
+//         console.log("New employee has been added");
+//         res.send(
+//           "New employee has been added into the database with ID = " +
+//             req.body.id +
+//             " and Name = " +
+//             req.body.name
+//         );
+//       }
+//     );
+//   });
+// });
 
 // View
 app.post("/view", function (req, res) {

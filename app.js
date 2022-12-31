@@ -53,9 +53,19 @@ app.use(limiter);
 
 db.run("CREATE TABLE IF NOT EXISTS emp(id TEXT, name TEXT)");
 
+// here gpt was saying do this
+//app.use(express.static(path.join(__dirname, "public")));
+
+app.use(express.static(path.join(__dirname, "/")));
+//this above code specifies where to load static/ css type files from.
+
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/form.html"));
+  res.sendFile(path.join(__dirname, "./index.html"));
 });
+
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
 
 //nechay delete later, hai add wala
 
@@ -182,6 +192,10 @@ app.get("/close", function (req, res) {
   });
 });
 
-server.listen(2000, function () {
-  console.log("server is listening on port: 2000");
+// server.listen(2000, function () {
+//   console.log("server is listening on port: 2000");
+// });
+const port = 2000;
+server.listen(port, function () {
+  console.log(`Server listening on port ${port}`);
 });

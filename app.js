@@ -19,15 +19,15 @@ async function fun() {
   try {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Hamza123",
+      password: "Oracle_5",
       connectString: "localhost/orcl",
     });
-    const data = await con.execute("SELECT * FROM USER_T");
+    const data = await con.execute("SELECT * FROM USER_TT");
 
     console.log(data.rows);
 
     //insert data
-    const sql = `insert into USER_T (naam, numberr) values('hiii','hhh')`;
+    const sql = `insert into USER_TT (naam, numberr) values('hiii','hhh')`;
     // const sql = `insert into USER_T (naam, numberr) values(${nam},${okkk}')`;
 
     let result = await con.execute(sql);
@@ -76,12 +76,12 @@ app.post("/add", function (req, res) {
     try {
       con = await oracledb.getConnection({
         user: "system",
-        password: "Hamza123",
+        password: "Oracle_5",
         connectString: "localhost/orcl",
       });
 
       const data = await con.execute(
-        "INSERT INTO USER_T(naam,numberr) VALUES(:naam,:numberr)",
+        "INSERT INTO USER_TT(naam,numberr) VALUES(:naam,:numberr)",
         [req.body.naam, req.body.numberr],
         function (err) {
           if (err) {

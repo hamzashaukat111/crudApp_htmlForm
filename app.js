@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Oracle_5",
+      password: "Hamza123",
       connectString: "localhost/orcl",
     });
   }
@@ -26,15 +26,17 @@ async function getConnection() {
 const oracledb = require("oracledb");
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
-// async function fun() {/// i also removed this code bcz it was inserting name and id khudi default wala everytime the node was running
+// async function fun() {
+/// i also removed this code bcz it was inserting name
+//and id khudi default wala everytime the node was running
 //   let con;
 
-  // try {
-  //   con = await oracledb.getConnection({
-  //     user: "system",
-  //     password: "Oracle_5",
-  //     connectString: "localhost/orcl",
-  //   });
+// try {
+//   con = await oracledb.getConnection({
+//     user: "system",
+//     password: "Oracle_5",
+//     connectString: "localhost/orcl",
+//   });
 //     const data = await con.execute("SELECT * FROM USER_TT");
 
 //     console.log(data.rows);
@@ -80,42 +82,6 @@ app.get("/", function (req, res) {
 //   res.sendFile(path.join(__dirname, "public", "index.html"));
 // });
 
-//without declaring con wali cheez for once wala code neeche wala:
-// app.post("/add", function (req, res) {
-//   async function kk() {
-//     let con;
-
-//     try {
-//       con = await oracledb.getConnection({
-//         user: "system",
-//         password: "Oracle_5",
-//         connectString: "localhost/orcl",
-//       });
-
-//       const data = await con.execute(
-//         "INSERT INTO USER_TT(naam,numberr) VALUES(:naam,:numberr)",
-//         [req.body.naam, req.body.numberr],
-//         function (err) {
-//           if (err) {
-//             return console.log(err.message);
-//           }
-//           console.log("New employee has been added");
-//           res.send(
-//             "New employee has been added into the database with ID = " +
-//               req.body.naam +
-//               " and Name = " +
-//               req.body.numberr
-//           );
-//         }
-//       );
-
-//       con.commit();
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   }
-//   kk();
-// });
 app.post("/add", async function (req, res) {
   const connection = await getConnection();
 
@@ -144,110 +110,81 @@ app.post("/add", async function (req, res) {
 });
 ///////////////////////////////////////////////////////////////////
 
-// Add (sqllite wala)
-// app.post("/add", function (req, res) {
-//   db.serialize(() => {
-//     db.run(
-//       "INSERT INTO emp(id,name) VALUES(?,?)",
-//       [req.body.id, req.body.name],
-//       function (err) {
-//         if (err) {
-//           return console.log(err.message);
-//         }
-//         console.log("New employee has been added");
-//         res.send(
-//           "New employee has been added into the database with ID = " +
-//             req.body.id +
-//             " and Name = " +
-//             req.body.name
-//         );
-//       }
-//     );
-//   });
-// });
-
 //after declaring con uper
-app.post('/view', async function(req, res) {
+app.post("/view", async function (req, res) {
   const connection = await getConnection();
 
   try {
     const result = await connection.execute(
       `SELECT  *FROM USER_TT WHERE naam = :naam`,
-      { naam: req.body.naam },
+      { naam: req.body.naam }
     );
-    console.log('Entry displayed successfully');
+    console.log("Entry displayed successfully");
+    console.log(result);
 
     if (result.rows.length > 0) {
+      // res.send(
+      //   `Record with name = ${req.body.naam} has been viewed from the database`
+      // );
+
       res.send(
-        `Record with name = ${req.body.naam} has been viewed from the database`
+        `
+       <head> <link rel="stylesheet" href="table.css" /> </head>
+       <body>
+<div class="table-title">
+<h3>Data Table</h3>
+</div>
+<table class="table-fill">
+<thead>
+<tr>
+<th class="text-left">ID</th>
+<th class="text-left">Employee</th>
+<th class="text-left">Number</th>
+</tr>
+</thead>
+<tbody class="table-hover">
+<tr>
+<td class="text-left">${result.rows[0].NAAM}</td>
+<td class="text-left">${result.rows[0].NUMBERR}</td>
+</tr>
+<tr>
+<td class="text-left">sampleData</td>
+<td class="text-left">sample</td>
+</tr>
+<tr>
+<td class="text-left">/td>
+<td class="text-left"></td>
+</tr>
+<tr>
+<td class="text-left"> </td>
+<td class="text-left">  </td>
+</tr>
+
+</tbody>
+</table>
+  
+
+  </body>
+    
+        `
       );
+      //       this nechay is how I can get data from database and display
+      //       in table with html css uper
+      // <h1> ID: ${result.rows[0].NAAM}. Data: ${result.rows[0].NUMBERR}</h1>
+      //this uper wala can be used inside html
     } else {
       res.send(
         `No record with name = ${req.body.naam} was found in the database`
       );
     }
-  } 
-  catch (err) {
+  } catch (err) {
     console.error(err);
-    res.send(`Error encountered while retrieving= ${req.body.naam} data from the database`);
+    res.send(
+      `Error encountered while retrieving= ${req.body.naam} data from the database`
+    );
   }
 });
-
-// without wo con wali cheez
-// app.post('/view', function(req, res) {
-//   async function vieww() {
-//     let con1;
-//     try {
-//       con1 = await oracledb.getConnection({
-//         user: 'system',
-//         password: 'Oracle_5',
-//         connectString: 'localhost/orcl'
-//       });
-//       const result = await con1.execute(
-//         `SELECT  *FROM USER_TT WHERE naam = :naam`,
-//         { naam: req.body.naam },
-//       );
-//       console.log('Entry displayed successfully');
-
-//       if (result.rows.length > 0) {
-//         res.send(
-//           `Record with name = ${req.body.naam} has been viewed from the database`
-//         );
-//       } else {
-//         res.send(
-//           `No record with name = ${req.body.naam} was found in the database`
-//         );
-//       }
-//     } 
-//     catch (err) {
-//       console.error(err);
-//       res.send(`Error encountered while retrieving= ${req.body.naam} data from the database`);
-//     }
-//   }
-//   vieww();
-// });
-
-
-
-
-// View
-// app.post("/view", function (req, res) {
-//   db.serialize(() => {
-//     db.each(
-//       "SELECT id ID, name NAME FROM emp WHERE id =?",
-//       [req.body.id],
-//       function (err, row) {
-//         //db.each() is only one which is funtioning while reading data from the DB
-//         if (err) {
-//           res.send("Error encountered while displaying");
-//           return console.error(err.message);
-//         }
-//         res.send(` ID: ${row.ID},    Name: ${row.NAME}`);
-//         console.log("Entry displayed successfully");
-//       }
-//     );
-//   });
-// });
+//view wala function is uper wala sara
 
 //Update
 app.post("/update", async function (req, res) {
@@ -271,37 +208,7 @@ app.post("/update", async function (req, res) {
     console.error(err);
   }
 });
-
-// app.post('/update', function(req, res) {
-//   async function updateRecord() {
-//     let con;
-//     try {
-//       con = await oracledb.getConnection({
-//         user: 'system',
-//         password: 'Oracle_5',
-//         connectString: 'localhost/orcl'
-//       });
-//       const result = await con.update(
-//         `UPDATE USER_TT SET numberr = :numberr WHERE naam = :naam`,
-//         { numberr: req.body.numberr, naam: req.body.naam }
-//       );
-//       console.log('Entry updated successfully');
-//       res.send('Entry updated successfully');
-//     } catch (err) {
-//       console.error(err);
-//       res.send('Error encountered while updating');
-//     } finally {
-//       if (con) {
-//         try {
-//           await con.close();
-//         } catch (err) {
-//           console.error(err);
-//         }
-//       }
-//     }
-//   }
-//   updateRecord();
-// });
+/////
 
 // app.post("/update", function (req, res) {
 //   db.serialize(() => {
@@ -320,7 +227,6 @@ app.post("/update", async function (req, res) {
 //   });
 // });
 
-
 ////////////delete////
 //con wali changes baad
 app.post("/delete", async function (req, res) {
@@ -336,7 +242,9 @@ app.post("/delete", async function (req, res) {
         }
         console.log("Record deleted");
         res.send(
-          "Record with name = " + req.body.naam + " has been deleted from the database"
+          "Record with name = " +
+            req.body.naam +
+            " has been deleted from the database"
         );
       }
     );
@@ -348,44 +256,6 @@ app.post("/delete", async function (req, res) {
 });
 
 ////
-// app.post("/delete", function (req, res) {
-//   async function deleteRecord() {
-//     let conn;
-
-//     try {
-//       conn = await oracledb.getConnection({
-//         user: "system",
-//         password: "Oracle_5",
-//         connectString: "localhost/orcl",
-//       });
-
-//       const data = conn.execute(
-//         "DELETE FROM USER_TT WHERE naam = :naam",
-//         { naam: req.body.naam },
-//         function (err) {
-//           if (err) {
-//             return console.log(err.message);
-//           }
-//           console.log("Record deleted");
-//           res.send(
-//             "Record with name = " + req.body.naam + " has been deleted from the database"
-//           );
-          
-//         }
-//       );
-//       // const dataa = await con.execute("SELECT * FROM USER_TT");
-
-//       // console.log(dataa.rows);
-//       conn.commit();
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   }
-
-//   deleteRecord();
-// });
-
-
 
 ////////////
 
@@ -431,7 +301,6 @@ app.post("/delete", async function (req, res) {
 //   res.sendStatus(200);
 // });
 // })();
-
 
 ////////////
 // Closing the database connection.

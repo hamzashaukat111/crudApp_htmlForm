@@ -250,7 +250,6 @@ app.post('/view', async function(req, res) {
 // });
 
 //Update
-
 app.post("/update", async function (req, res) {
   const connection = await getConnection();
 
@@ -272,7 +271,37 @@ app.post("/update", async function (req, res) {
     console.error(err);
   }
 });
-/////
+
+// app.post('/update', function(req, res) {
+//   async function updateRecord() {
+//     let con;
+//     try {
+//       con = await oracledb.getConnection({
+//         user: 'system',
+//         password: 'Oracle_5',
+//         connectString: 'localhost/orcl'
+//       });
+//       const result = await con.update(
+//         `UPDATE USER_TT SET numberr = :numberr WHERE naam = :naam`,
+//         { numberr: req.body.numberr, naam: req.body.naam }
+//       );
+//       console.log('Entry updated successfully');
+//       res.send('Entry updated successfully');
+//     } catch (err) {
+//       console.error(err);
+//       res.send('Error encountered while updating');
+//     } finally {
+//       if (con) {
+//         try {
+//           await con.close();
+//         } catch (err) {
+//           console.error(err);
+//         }
+//       }
+//     }
+//   }
+//   updateRecord();
+// });
 
 // app.post("/update", function (req, res) {
 //   db.serialize(() => {

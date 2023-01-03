@@ -90,7 +90,7 @@ app.post("/add", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "INSERT INTO USER_TT(naam,numberr) VALUES(:naam,:numberr)",
+      "INSERT INTO USER_TTT (naam,numberr) VALUES(:naam,:numberr)",
       [req.body.naam, req.body.numberr],
       function (err) {
         if (err) {
@@ -119,7 +119,7 @@ app.post("/view", async function (req, res) {
 
   try {
     const result = await connection.execute(
-      `SELECT  *FROM USER_TT WHERE naam = :naam`,
+      `SELECT  *FROM USER_TTT WHERE naam = :naam`,
       { naam: req.body.naam }
     );
     console.log("Entry displayed successfully");
@@ -135,20 +135,23 @@ app.post("/view", async function (req, res) {
        <head> <link rel="stylesheet" href="table.css" /> </head>
        <body>
 <div class="table-title">
-<h3>Data Table</h3>
+<h3>Employee Table</h3>
 </div>
 <table class="table-fill">
 <thead>
 <tr>
 <th class="text-left">ID</th>
 <th class="text-left">Employee</th>
-<th class="text-left">Number</th>
+<th class="text-left">MANAGER ID</th>
+<th class="text-left">BRANCH ID</th>
 </tr>
 </thead>
 <tbody class="table-hover">
 <tr>
 <td class="text-left">${result.rows[0].NAAM}</td>
 <td class="text-left">${result.rows[0].NUMBERR}</td>
+<td class="text-left">${result.rows[0].MANAGER_ID}</td>
+<td class="text-left">${result.rows[0].BRANCH_ID}</td>
 </tr>
 <tr>
 <td class="text-left">sampleData</td>
@@ -195,7 +198,7 @@ app.post("/update", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "UPDATE USER_TT SET numberr = :numberr WHERE naam = :naam",
+      "UPDATE USER_TTT SET numberr = :numberr WHERE naam = :naam",
       [req.body.numberr, req.body.naam],
       function (err) {
         if (err) {
@@ -237,7 +240,7 @@ app.post("/delete", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "DELETE FROM USER_TT WHERE naam = :naam ",
+      "DELETE FROM USER_TTT WHERE naam = :naam ",
       { naam: req.body.naam },
       function (err) {
         if (err) {

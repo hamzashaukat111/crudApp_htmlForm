@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Hamza123",
+      password: "Oracle_5",
       connectString: "localhost/orcl",
     });
   }
@@ -77,6 +77,9 @@ app.use(express.static(path.join(__dirname, "/")));
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./index.html"));
 });
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(__dirname, "./login1.html"));
+// });
 
 // app.get("/", function (req, res) {
 //   res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -234,7 +237,7 @@ app.post("/delete", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "DELETE FROM USER_TT WHERE naam = :naam",
+      "DELETE FROM USER_TT WHERE naam = :naam ",
       { naam: req.body.naam },
       function (err) {
         if (err) {

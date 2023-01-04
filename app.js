@@ -90,8 +90,8 @@ app.post("/add", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "INSERT INTO USER_TTT (naam,numberr) VALUES(:naam,:numberr)",
-      [req.body.naam, req.body.numberr],
+      "INSERT INTO USER_TTT(naam,numberr,Manager_id,Branch_id) VALUES(:naam,:numberr,:Manager_id,:Branch_id)",
+      [req.body.naam, req.body.numberr,req.body.Manager_id,req.body.Branch_id],
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -101,7 +101,8 @@ app.post("/add", async function (req, res) {
           "New employee has been added into the database with ID = " +
             req.body.naam +
             " and Name = " +
-            req.body.numberr
+            req.body.numberr+ " "+
+            req.body.Manager_id+" "+req.body.Branch_id
         );
       }
     );
@@ -135,15 +136,15 @@ app.post("/view", async function (req, res) {
        <head> <link rel="stylesheet" href="table.css" /> </head>
        <body>
 <div class="table-title">
-<h3>Employee Table</h3>
+<h3>Data Table</h3>
 </div>
 <table class="table-fill">
 <thead>
 <tr>
 <th class="text-left">ID</th>
 <th class="text-left">Employee</th>
-<th class="text-left">MANAGER ID</th>
-<th class="text-left">BRANCH ID</th>
+<th class="text-left">MANAGER</th>
+<th class="text-left">BRANCH</th>
 </tr>
 </thead>
 <tbody class="table-hover">
@@ -198,7 +199,7 @@ app.post("/update", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "UPDATE USER_TTT SET numberr = :numberr WHERE naam = :naam",
+      "UPDATE USER_TT SET numberr = :numberr WHERE naam = :naam",
       [req.body.numberr, req.body.naam],
       function (err) {
         if (err) {

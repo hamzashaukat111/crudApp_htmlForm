@@ -7,31 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="delete-form">
-        <input type="number" id="item-id" placeholder="Enter item ID">
-        <button type="submit">-</button>
-      </form>
+    <button id="delete-button" action="/del">-</button>
 
-      <script>
-const deleteForm = document.getElementById('delete-form');
-
-deleteForm.addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent the form from submitting
-
-  // Get the item ID entered by the user
-  const itemId = document.getElementById('item-id').value;
-
-  // Send a DELETE request to the server
-  fetch(`/api/items/${itemId}`, {
-    method: 'DELETE'
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  });
+<script>
+    document.getElementById('delete-button').addEventListener('click', () => {
+  fetch('/del', { method: 'DELETE' });
 });
 
-
-      </script>
+</script>      
 </body>
 </html>

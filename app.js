@@ -56,7 +56,7 @@ oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 150, // limit each IP to 100 requests per windowMs
 });
 
 var db = new sqlite3.Database("./database/employees.db");
@@ -199,7 +199,7 @@ app.post("/update", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "UPDATE USER_TT SET numberr = :numberr WHERE naam = :naam",
+      "UPDATE USER_TTT SET numberr = :numberr WHERE naam = :naam",
       [req.body.numberr, req.body.naam],
       function (err) {
         if (err) {
@@ -217,22 +217,6 @@ app.post("/update", async function (req, res) {
 });
 /////
 
-// app.post("/update", function (req, res) {
-//   db.serialize(() => {
-//     db.run(
-//       "UPDATE emp SET name = ? WHERE id = ?",
-//       [req.body.name, req.body.id],
-//       function (err) {
-//         if (err) {
-//           res.send("Error encountered while updating");
-//           return console.error(err.message);
-//         }
-//         res.send("Entry updated successfully");
-//         console.log("Entry updated successfully");
-//       }
-//     );
-//   });
-// });
 
 ////////////delete////
 //con wali changes baad
@@ -262,54 +246,254 @@ app.post("/delete", async function (req, res) {
   }
 });
 
-////
 
-////////////
+///////////////
+async function addToCart(product_idd, price, quantity) {
+  const connection = await getConnection();
+  console.log("addToCart function called");
+  console.log("productId:", product_idd);
+  console.log("price:", price);
+  console.log("quantity:", quantity);
 
-// const express = require('express');
-// const oracledb = require('oracledb');
+  // Check if the product already exists in the cart
+  const exists = await checkIfProductExists(product_idd);
+  if (exists) {
+    // Update the quantity of the existing product
+    await updateQuantity(product_idd, quantity);
+  } else {
+    // Insert a new row into the cart table
+    try {
+      const data = await connection.execute(
+        "INSERT INTO cart(product_idd,price,quantity) VALUES(:product_idd,:price,:quantity)",
+        [product_idd, price, quantity],
+        function (err) {
+          if (err) {
+            return console.log(err.message);
+          }
+          console.log("New product has been added");
+        }
+      );
 
-// Connect to the database
-// (async () =>{
-// const connectionn = await oracledb.getConnection({
-//   user: 'system',
-//   password: 'Oracle_5',
-//   connectString: 'localhost/orcl'
-// });
+      connection.commit();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+//inertion :
+app.post("/add-to-cart", async function (req, res) {
+  console.log("/add-to-cart route called");
 
-// // Create the HTTP server
-// const app = express();
+  const product_idd = req.body.product_idd;
+  const price = req.body.price;
+  const quantity = req.body.quantity;
 
-// // Add items to the database
-// app.post('/add', async (req, res) => {
-//   const { quantity } = req.body;
-//   for (let i = 0; i < quantity; i++) {
-//     await connectionn.execute(
-//       'INSERT INTO items (id,total_count,deleted_count) VALUES (:id,:total_count,:deleted_count)',
-//       [req.body.naam, req.body.numberr],
-//     );
-//   }
-//   res.sendStatus(200);
-// });
+  // check if product already exists in cart
+  const exists = await checkIfProductExists(product_idd);
+  if (exists) {
+    // update quantity if product already exists
+    await updateQuantity(product_idd, quantity);
+  } else {
+    // add new product to cart
+    await addToCart(product_idd, price, quantity);
+  }
+  res.send({ message: "Product added to cart successfully" });
+});
 
-// Delete items from the database
-// app.delete('/delete/:id', async (req, res) => {
-//   await connectionn.execute(
-//     'DELETE FROM items WHERE id = ?',req.body.id,
-//     function (err) {
-//       if (err) {
-//         res.send("Error encountered while deleting");
-//         return console.error(err.message);
-//       }
-//       res.send("Entry deleted");
-//       console.log("Entry deleted");
-//     }
-//   );
-//   res.sendStatus(200);
-// });
-// })();
+async function checkIfProductExists(product_idd) {
+  const connection = await getConnection();
 
-////////////
+  try {
+    const sql = await connection.execute(
+      "SELECT COUNT(*) as count FROM cart WHERE product_idd = :product_idd",
+      [product_idd],
+      function (err, result) {
+        if (err) {
+          // Handle the error here
+          console.error(err);
+          return false;
+        }
+        console.log("checking if product exists added");
+        return result.rows[0].count > 0;
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+async function updateQuantity(product_idd, quantity) {
+  const con = await getConnection();
+
+  try {
+    const sql2 = await con.execute(
+      "UPDATE cart SET quantity = quantity + :quantity WHERE product_idd = :product_idd",
+      [product_idd, quantity],
+      function (err) {
+        if (err) {
+          return console.log(err.message);
+        }
+        console.log("updating quantity added");
+      }
+    );
+
+    con.commit();
+  } catch (err) {
+    console.error(err);
+  }
+}
+///////////////////2ndcart////////////////
+
+app.post("/add-to-cart-1", async function (req, res) {
+  console.log("/add-to-cart route called");
+
+  const product_idd = req.body.product_idd;
+  const price = req.body.price;
+  const quantity = req.body.quantity;
+
+  // check if product already exists in cart
+  const exists = await checkIfProductExists(product_idd);
+  if (exists) {
+    // update quantity if product already exists
+    await updateQuantity(product_idd, quantity);
+  } else {
+    // add new product to cart
+    await addToCart(product_idd, price, quantity);
+  }
+  res.send({ message: "Product added to cart successfully" });
+});
+////////////3rd
+app.post("/add-to-cart-2", async function (req, res) {
+  console.log("/add-to-cart route called");
+
+  const product_idd = req.body.product_idd;
+  const price = req.body.price;
+  const quantity = req.body.quantity;
+
+  // check if product already exists in cart
+  const exists = await checkIfProductExists(product_idd);
+  if (exists) {
+    // update quantity if product already exists
+    await updateQuantity(product_idd, quantity);
+  } else {
+    // add new product to cart
+    await addToCart(product_idd, price, quantity);
+  }
+  res.send({ message: "Product added to cart successfully" });
+});
+///////////4th
+app.post("/add-to-cart-3", async function (req, res) {
+  console.log("/add-to-cart route called");
+
+  const product_idd = req.body.product_idd;
+  const price = req.body.price;
+  const quantity = req.body.quantity;
+
+  // check if product already exists in cart
+  const exists = await checkIfProductExists(product_idd);
+  if (exists) {
+    // update quantity if product already exists
+    await updateQuantity(product_idd, quantity);
+  } else {
+    // add new product to cart
+    await addToCart(product_idd, price, quantity);
+  }
+  res.send({ message: "Product added to cart successfully" });
+});
+
+////////checkout:
+app.post("/check-out", async function (req, res) {
+  console.log("/check-out route called");
+  const connection = await getConnection();
+  
+    try {
+      
+      const result = await connection.execute(
+        `SELECT product_idd, quantity, price, quantity * price AS total_price,
+         (SELECT SUM(quantity * price) FROM cart) AS overall_total
+         FROM cart`,
+        //  { product_idd: req.body.product_idd,quantity:req.body.quantity,price:req.body.price }
+      );
+      console.log('Data retrieved successfully');
+      console.log(result.rows);
+ 
+  if (result.rows.length > 0) {
+    let tableRows = '';
+    for (const row of result.rows) {
+      tableRows += `
+        <tr>
+          <td class="text-left">${row.PRODUCT_IDD}</td>
+          <td class="text-left">${row.QUANTITY}</td>
+          <td class="text-left">${row.PRICE}</td>
+          <td class="text-left">${row.TOTAL_PRICE}</td>
+          <td class="text-left">${row.OVERALL_TOTAL}</td>
+        </tr>
+      `;
+    }
+    res.send(
+      `
+      <head> <link rel="stylesheet" href="table.css" /> </head>
+      <body>
+        <div class="table-title">
+          <h3>Data Table</h3>
+        </div>
+        <table class="table-fill">
+          <thead>
+            <tr>
+              <th class="text-left">PRODUCT_ID</th>
+              <th class="text-left">QUANTITY</th>
+              <th class="text-left">PRICE</th>
+              <th class="text-left">TOTAL_PRICE</th>
+              <th class="text-left">OVERALL_TOTAL</th>
+            </tr>
+          </thead>
+          <tbody class="table-hover">
+            ${tableRows}
+          </tbody>
+        </table>
+      </body>
+      `
+    );
+  } else {
+    res.send(
+      `No record found in the database`
+    );
+  }
+    }  
+  catch (err) {
+      console.error(err);
+    }
+  
+});
+
+////////////////CANCEL BUTTON
+app.post("/cancel", async function (req, res) {
+  console.log("/check-out route called");
+  const connection = await getConnection();
+  
+    
+    try {
+      
+      const result = await connection.execute(
+        `TRUNCATE TABLE cart`,
+        );
+      console.log('CART IS EMPTIED');
+      console.log(result.rows);
+      
+        res.send("cart is being emptied");
+      
+    } catch (err) {
+      console.error(err);
+    }
+  
+
+
+});
+
+
+
+
 // Closing the database connection.
 app.get("/close", function (req, res) {
   db.close((err) => {

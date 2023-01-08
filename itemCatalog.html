@@ -17,7 +17,7 @@
           width="100px"
           height="100px"
         />
-        <big> Store </big>
+        <big> Mens Fashion Store </big>
       </center>
     </logo>
 
@@ -63,14 +63,25 @@
           <center>
             Price = 250$<br />
             Denim Jacket from <i>Levis</i> available with very fine quality.<br />
-            <div class="wrapper">
+            <!-- <div class="wrapper">
               <span action="/minus" class="minusJ"> - </span>
               <span class="numJ"> 0 </span>
               <span class="plusJ"> + </span>
-            </div>
+            </div> -->
+            <form action="/add-to-cart" method="POST">
+              <!-- product information and "Add to Cart" button go here -->
+              <!-- <input type="hidden" name="customer_id" value="12345" /> -->
+              <input type="hidden" name="product_idd" value="1" />
+              <input type="hidden" name="price" value="250" />
+              <label id="label">Quantity</label>
+              <input id='quantity'type="text" name="quantity" size="10" />
+              <!-- <button class="fill">Fill In</button> -->
+              <button class='btn'type="submit">Add to Cart</button>
+            </form>
+           
 
             <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <!-- <script>
               const plusJ = document.querySelector(".plusJ"),
                 minusJ = document.querySelector(".minusJ"),
                 numJ = document.querySelector(".numJ");
@@ -86,9 +97,10 @@
                 J = J < 0 ? "0" : J;
                 numJ.innerText = J;
               });
-            </script>
+            </script> -->
           </center>
         </jacket>
+
         <hoodie class="items">
           <img
             src="images\hoodie.jpg"
@@ -104,16 +116,26 @@
             </u>
           </h3>
           <center>
-            Price = 100$<br />
+            Price = 550$<br />
             Hoodie from <i>Tommy Hilfiger</i> available with very fine quality.
-            <div class="wrapper">
+            <!-- <div class="wrapper">
               <span class="minusH"> - </span>
               <span class="numH"> 0 </span>
               <span class="plusH"> + </span>
-            </div>
+            </div> -->
+            <form action="/add-to-cart-1" method="POST">
+              <!-- product information and "Add to Cart" button go here -->
+              <!-- <input type="hidden" name="customer_id" value="12345" /> -->
+              <input type="hidden" name="product_idd" value="2" />
+              <input type="hidden" name="price" value="550" />
+              <label id="label">Quantity</label>
+              <input id='quantity'type="text" name="quantity" size="10" />
+              <!-- <button class="fill">Fill In</button> -->
+              <button class='btn'type="submit">Add to Cart</button>
+            </form>
 
             <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <!-- <script>
               const plusH = document.querySelector(".plusH"),
                 minusH = document.querySelector(".minusH"),
                 numH = document.querySelector(".numH");
@@ -129,7 +151,7 @@
                 H = H < 0 ? "0" : H;
                 numH.innerText = H;
               });
-            </script>
+            </script> -->
           </center>
         </hoodie>
         <shirt class="items">
@@ -149,14 +171,23 @@
           <center>
             Price = 150$<br />
             Shirt from <i>Cougar</i> available with very fine quality.
-            <div class="wrapper">
+            <!-- <div class="wrapper">
               <span class="minusS"> - </span>
               <span class="numS"> 0 </span>
               <span class="plusS"> + </span>
-            </div>
+            </div> -->
+            <form action="/add-to-cart-2" method="POST">
+              <!-- product information and "Add to Cart" button go here -->
+              <input type="hidden" name="product_idd" value="3" />
+              <input type="hidden" name="price" value="350" />
+              <label id="label">Quantity</label>
+              <input id='quantity'type="text" name="quantity" size="10" />
+              <!-- <button class="fill">Fill In</button> -->
+              <button class='btn'type="submit">Add to Cart</button>
+            </form>
 
             <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <!-- <script>
               const plusS = document.querySelector(".plusS"),
                 minusS = document.querySelector(".minusS"),
                 numS = document.querySelector(".numS");
@@ -172,7 +203,7 @@
                 S = S < 0 ? "0" : S;
                 numS.innerText = S;
               });
-            </script>
+            </script> -->
           </center>
         </shirt>
         <jeans class="items">
@@ -192,14 +223,21 @@
           <center>
             Price = 130$<br />
             Jeans from <i>Levis</i> available with very fine quality.
-            <div class="wrapper">
+            <!-- <div class="wrapper">
               <span class="minusJJ"> - </span>
               <span class="numJJ"> 0 </span>
               <span class="plusJJ"> + </span>
-            </div>
-
+            </div> -->
+            <form action="/add-to-cart-3" method="POST">
+            <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="price" value="750" />
+              <label id="label">Quantity</label>
+              <input id='quantity'type="text" name="quantity" size="10" />
+              <!-- <button class="fill">Fill In</button> -->
+              <button class='btn'type="submit">Add to Cart</button>
+            </form>
             <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <!-- <script>
               const plusJJ = document.querySelector(".plusJJ"),
                 minusJJ = document.querySelector(".minusJJ"),
                 numJJ = document.querySelector(".numJJ");
@@ -215,13 +253,20 @@
                 JJ = JJ < 0 ? "0" : JJ;
                 numJJ.innerText = JJ;
               });
-            </script>
+            </script> -->
           </center>
         </jeans>
       </categories1>
       <br />
 
-      <center>
+<form action="/check-out" method="POST">
+  <button class="btn1">checkout</button>
+</form>
+<form action="/cancel" method="POST">
+  <button class="btn1">cancel</button>
+</form>
+
+      <!-- <center>
         <h2>Men Accessories: <br /></h2>
       </center>
       <categories2 class="cat">
@@ -248,8 +293,8 @@
               <span class="plusW"> + </span>
             </div>
 
-            <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <a = (a < 0) ? "0" + a : a -->
+            <!-- <script>
               const plusW = document.querySelector(".plusW"),
                 minusW = document.querySelector(".minusW"),
                 numW = document.querySelector(".numW");
@@ -293,10 +338,10 @@
               <span class="minusB"> - </span>
               <span class="numB"> 0 </span>
               <span class="plusB"> + </span>
-            </div>
+            </div> -->
 
             <!-- a = (a < 0) ? "0" + a : a -->
-            <script>
+            <!-- <script>
               const plusB = document.querySelector(".plusB"),
                 minusB = document.querySelector(".minusB"),
                 numB = document.querySelector(".numB");
@@ -316,7 +361,7 @@
             </script>
           </center>
         </bracelet>
-      </categories2>
+      </categories2>  -->
     </main>
   </body>
 </html>

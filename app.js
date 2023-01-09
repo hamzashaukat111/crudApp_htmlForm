@@ -410,11 +410,16 @@ app.post("/check-out", async function (req, res) {
     try {
       
       const result = await connection.execute(
-        `SELECT product_idd, quantity, price, quantity * price AS total_price,
-         (SELECT SUM(quantity * price) FROM cart) AS overall_total
-         FROM cart`,
-        //  { product_idd: req.body.product_idd,quantity:req.body.quantity,price:req.body.price }
+        `(SELECT product_idd, quantity, price, quantity * price AS total_price
+          FROM cart)
+         UNION ALL
+         (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, SUM(quantity * price) AS total_price
+          FROM cart)`, // Add a closing parenthesis here
       );
+      // `SELECT product_idd, quantity, price, quantity * price AS total_price,
+      // (SELECT SUM(quantity * price) FROM cart) AS overall_total
+      // FROM cart`,//for previous output
+      
       console.log('Data retrieved successfully');
       console.log(result.rows);
  
@@ -427,7 +432,7 @@ app.post("/check-out", async function (req, res) {
           <td class="text-left">${row.QUANTITY}</td>
           <td class="text-left">${row.PRICE}</td>
           <td class="text-left">${row.TOTAL_PRICE}</td>
-          <td class="text-left">${row.OVERALL_TOTAL}</td>
+          
         </tr>
       `;
     }
@@ -445,7 +450,7 @@ app.post("/check-out", async function (req, res) {
               <th class="text-left">QUANTITY</th>
               <th class="text-left">PRICE</th>
               <th class="text-left">TOTAL_PRICE</th>
-              <th class="text-left">OVERALL_TOTAL</th>
+              
             </tr>
           </thead>
           <tbody class="table-hover">

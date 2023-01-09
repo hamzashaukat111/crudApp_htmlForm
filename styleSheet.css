@@ -33,7 +33,7 @@ body {
 }
 
 .menu-bar {
-    background: #8b7a97;
+    background-color: rgb(138, 124, 137);
     text-align: center;
     float: inline-end;
     font-size: larger;

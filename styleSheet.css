@@ -3,7 +3,7 @@
 }
 
 .logo {
-    color: white;
+    color: black;
     font-size: 40px;
     font-family: 'Montserrat', sans-serif !important;
 
@@ -16,10 +16,15 @@
 }
 
 body {
-    background: #3b586e;
+    
+    background-color: rgba(153, 122, 167, 0.5);
     /* background: url(mainBackground.png); */
-    background-size: auto;
-    background-position: center;
+    /* background-size: auto;
+    background-position: center; 
+    /* background-image: url('images/b.jpg');
+  background-size: cover;
+  opacity: 0.5; */
+
     font-family: 'Montserrat', sans-serif !important;
 
     color: black;
@@ -28,10 +33,11 @@ body {
 }
 
 .menu-bar {
-    background: #4c708b;
+    background-color: rgb(138, 124, 137);
     text-align: center;
     float: inline-end;
     font-size: larger;
+    opacity: 1;
 }
 
 .menu-bar ul {
@@ -51,13 +57,13 @@ body {
 
 .menu-bar ul li a {
     text-decoration: none;
-    color: white;
+    color: rgb(10, 10, 10);
 }
 
 .menu-bar ul li:hover {
     border-radius: 50%;
     transition: background-color 0.5s ease;
-    background-color: rgb(46, 100, 114);
+    background-color: rgba(78, 45, 74,0.7);
     border-radius: 5px;
 }
 
@@ -74,13 +80,15 @@ body {
     width: 300px;
     height: 450px;
     box-shadow: -1px 0 10px black;
+    background-color: rgb(138, 124, 137);
+   
 }
 
 footer {
     text-align: center;
     padding: 3px;
     box-shadow: -1px 0 10px black;
-    color: white;
+    color: rgb(94, 74, 102);
     display: block;
     position: absolute;
     bottom: 0;
@@ -145,3 +153,59 @@ footer {
 .form {
     margin: 20px;
 }
+#quantity {
+    width: 45px;
+    height: 25px;
+    font-size: 13px;
+    border-radius: 5px;
+    background-color: #9eb6c9;
+  }
+  #lable{
+    font-weight: bold;
+   
+  }
+  
+  .btn {
+    transition-duration: 0.4s;
+    border-radius: 8px;
+    background-color: #2b2b2b;
+    color: white;
+ border: none;
+ height: 30px;
+ font-size: 11px;
+ font-weight: bold;
+ font-family: 'Montserrat', sans-serif !important;
+  }
+  
+  .btn:hover {
+    background-color: #030303; 
+    color: rgb(243, 243, 247);
+  }
+
+  .btn1 {
+    transition-duration: 0.4s;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #2b2b2b;
+ border: none;
+ height: 35px;
+ width: 80px;
+ font-weight: bold;
+ 
+    position:relative;
+    left: 50%;
+    bottom: 0%;
+    top: 20%;
+    transform: translateX(-50%);
+    color: white;
+ 
+  
+  }
+  
+  .btn1:hover {
+    background-color: #030303; 
+    color: rgb(243, 243, 247);
+  }
+
+
+  

@@ -20,13 +20,17 @@
 
 body {
     
+
     /* background-color: rgba(115, 92, 153, 0.5); */
+
+
     /* background: url(mainBackground.png); */
     /* background-size: auto;
     background-position: center; 
     /* background-image: url('images/b.jpg');
   background-size: cover;
   opacity: 0.5; */
+
   background: -webkit-linear-gradient(left, #e4dee6 0%, #e6e0eb 100%);
             background: -o-linear-gradient(left, #d8d1db 0%, #cfc9d1 100%);
             background: linear-gradient(to right, #dfd6e2 0%, #cec9d1 100%);
@@ -35,6 +39,7 @@ body {
             font-family: 'Quicksand';
             font-weight: bold;
     /* font-family: 'Montserrat', sans-serif !important; */
+
 
     color: black;
     margin: 0;

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap');
 * {
     box-sizing: border-box;
 }
@@ -5,7 +6,9 @@
 .logo {
     color: black;
     font-size: 40px;
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Quicksand';
+    font-weight: bold;
+    /* font-family: 'Montserrat', sans-serif !important; */
 
 }
 
@@ -17,7 +20,10 @@
 
 body {
     
-    background-color: rgba(153, 122, 167, 0.5);
+
+    /* background-color: rgba(115, 92, 153, 0.5); */
+
+
     /* background: url(mainBackground.png); */
     /* background-size: auto;
     background-position: center; 
@@ -25,7 +31,15 @@ body {
   background-size: cover;
   opacity: 0.5; */
 
-    font-family: 'Montserrat', sans-serif !important;
+  background: -webkit-linear-gradient(left, #e4dee6 0%, #e6e0eb 100%);
+            background: -o-linear-gradient(left, #d8d1db 0%, #cfc9d1 100%);
+            background: linear-gradient(to right, #dfd6e2 0%, #cec9d1 100%);
+            position: relative;
+            height: 100vh;
+            font-family: 'Quicksand';
+            font-weight: bold;
+    /* font-family: 'Montserrat', sans-serif !important; */
+
 
     color: black;
     margin: 0;
@@ -78,7 +92,7 @@ body {
 .items {
     margin: 10px;
     width: 300px;
-    height: 450px;
+    height: 500px;
     box-shadow: -1px 0 10px black;
     background-color: rgb(138, 124, 137);
    

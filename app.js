@@ -266,7 +266,7 @@ async function addToCart(product_idd, price, quantity,itemID) {
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-        "INSERT INTO cart(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
+        "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
         [product_idd, price, quantity,itemID],
         function (err) {
           if (err) {
@@ -308,7 +308,7 @@ async function checkIfProductExists(product_idd) {
 
   try {
     const sql = await connection.execute(
-      "SELECT COUNT(*) as count FROM cart WHERE product_idd = :product_idd",
+      "SELECT COUNT(*) as count FROM Product WHERE product_idd = :product_idd",
       [product_idd],
       function (err, result) {
         if (err) {
@@ -331,7 +331,7 @@ async function updateQuantity(product_idd, quantity) {
 
   try {
     const sql2 = await con.execute(
-      "UPDATE cart SET quantity = quantity + :quantity WHERE product_idd = :product_idd",
+      "UPDATE Product SET quantity = quantity + :quantity WHERE product_idd = :product_idd",
       [product_idd, quantity],
       function (err) {
         if (err) {
@@ -358,10 +358,10 @@ app.post("/check-out", async function (req, res) {
       
       const result = await connection.execute(
         `(SELECT product_idd, quantity, price, quantity * price AS total_price
-          FROM cart)
+          FROM Product)
          UNION ALL
          (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, SUM(quantity * price) AS total_price
-          FROM cart)`, // Add a closing parenthesis here
+          FROM Product)`, // Add a closing parenthesis here
       );
       // `SELECT product_idd, quantity, price, quantity * price AS total_price,
       // (SELECT SUM(quantity * price) FROM cart) AS overall_total
@@ -428,7 +428,7 @@ app.post("/cancel", async function (req, res) {
     try {
       
       const result = await connection.execute(
-        `TRUNCATE TABLE cart`,
+        `TRUNCATE TABLE Product`,
         );
       console.log('CART IS EMPTIED');
       console.log(result.rows);

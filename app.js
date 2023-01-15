@@ -481,7 +481,7 @@ app.post("/login", async function (req, res) {
       console.log(`user with id just logged in`);
       res.redirect("/itemcatalog.html");
     } else {
-      console.log("Invaliddddd credentials");
+      console.log("Invalidd credentials");
       res.send("Invalid credentials");
     }
   } catch (err) {

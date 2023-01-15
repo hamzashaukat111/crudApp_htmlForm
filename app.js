@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Oracle_5",
+      password: "Hamza123",
       connectString: "localhost/orcl",
     });
   }
@@ -428,6 +428,62 @@ app.post("/cancel", async function (req, res) {
     console.log(result.rows);
 
     res.send("cart is being emptied");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+//////entering customer details
+app.post("/loginDetails", async function (req, res) {
+  const connection = await getConnection();
+
+  try {
+    const data = await connection.execute(
+      "INSERT INTO CUSTOME(Customer_id, Customer_pw, Customer_name, Customer_no, Customer_address) VALUES(:customerId, :customerPassword, :customerName, :customerNumber, :customerAddress)",
+      [
+        req.body.customerId,
+        req.body.customerPassword,
+        req.body.customerName,
+        req.body.customerNumber,
+        req.body.customerAddress,
+      ],
+      function (err) {
+        if (err) {
+          return console.log(err.message);
+        }
+        console.log("New customer has been added");
+        res.send(
+          "New customer has been added into the database with ID = " +
+            req.body.customerId +
+            " and Name = " +
+            req.body.customerName
+        );
+      }
+    );
+
+    connection.commit();
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+////login
+app.post("/login", async function (req, res) {
+  const connection = await getConnection();
+
+  try {
+    const data = await connection.execute(
+      "SELECT * FROM CUSTOME WHERE Customer_id = :customerId AND Customer_pw = :customerPassword",
+      [req.body.customerId, req.body.customerPassword]
+    );
+    // check if data array is not empty, then redirect
+    if (data.rows.length > 0) {
+      console.log(`user with id just logged in`);
+      res.redirect("/itemcatalog.html");
+    } else {
+      console.log("Invalid credentials");
+      res.send("Invalid credentials");
+    }
   } catch (err) {
     console.error(err);
   }

@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Hamza123",
+      password: "Oracle_5",
       connectString: "localhost/orcl",
     });
   }

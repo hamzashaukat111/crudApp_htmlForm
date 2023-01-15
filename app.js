@@ -26,7 +26,6 @@ async function getConnection() {
 const oracledb = require("oracledb");
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
-
 // async function fun() {
 /// i also removed this code bcz it was inserting name
 //and id khudi default wala everytime the node was running
@@ -92,7 +91,12 @@ app.post("/add", async function (req, res) {
   try {
     const data = await connection.execute(
       "INSERT INTO USER_TTT(naam,numberr,Manager_id,Branch_id) VALUES(:naam,:numberr,:Manager_id,:Branch_id)",
-      [req.body.naam, req.body.numberr,req.body.Manager_id,req.body.Branch_id],
+      [
+        req.body.naam,
+        req.body.numberr,
+        req.body.Manager_id,
+        req.body.Branch_id,
+      ],
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -102,8 +106,11 @@ app.post("/add", async function (req, res) {
           "New employee has been added into the database with ID = " +
             req.body.naam +
             " and Name = " +
-            req.body.numberr+ " "+
-            req.body.Manager_id+" "+req.body.Branch_id
+            req.body.numberr +
+            " " +
+            req.body.Manager_id +
+            " " +
+            req.body.Branch_id
         );
       }
     );
@@ -218,7 +225,6 @@ app.post("/update", async function (req, res) {
 });
 /////
 
-
 ////////////delete////
 //con wali changes baad
 app.post("/delete", async function (req, res) {
@@ -247,9 +253,8 @@ app.post("/delete", async function (req, res) {
   }
 });
 
-
 ///////////////
-async function addToCart(product_idd, price, quantity,itemID) {
+async function addToCart(product_idd, price, quantity, itemID) {
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
@@ -267,7 +272,7 @@ async function addToCart(product_idd, price, quantity,itemID) {
     try {
       const data = await connection.execute(
         "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
-        [product_idd, price, quantity,itemID],
+        [product_idd, price, quantity, itemID],
         function (err) {
           if (err) {
             return console.log(err.message);
@@ -298,7 +303,7 @@ app.post("/add-to-cart", async function (req, res) {
     await updateQuantity(product_idd, quantity);
   } else {
     // add new product to cart
-    await addToCart(product_idd, price, quantity,itemID);
+    await addToCart(product_idd, price, quantity, itemID);
   }
   res.send({ message: "Product added to cart successfully" });
 });
@@ -347,33 +352,30 @@ async function updateQuantity(product_idd, quantity) {
   }
 }
 
-
-
 ////////checkout:
 app.post("/check-out", async function (req, res) {
   console.log("/check-out route called");
   const connection = await getConnection();
-  
-    try {
-      
-      const result = await connection.execute(
-        `(SELECT product_idd, quantity, price, quantity * price AS total_price
+
+  try {
+    const result = await connection.execute(
+      `(SELECT product_idd, quantity, price, quantity * price AS total_price
           FROM Product)
          UNION ALL
          (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, SUM(quantity * price) AS total_price
-          FROM Product)`, // Add a closing parenthesis here
-      );
-      // `SELECT product_idd, quantity, price, quantity * price AS total_price,
-      // (SELECT SUM(quantity * price) FROM cart) AS overall_total
-      // FROM cart`,//for previous output
-      
-      console.log('Data retrieved successfully');
-      console.log(result.rows);
- 
-  if (result.rows.length > 0) {
-    let tableRows = '';
-    for (const row of result.rows) {
-      tableRows += `
+          FROM Product)` // Add a closing parenthesis here
+    );
+    // `SELECT product_idd, quantity, price, quantity * price AS total_price,
+    // (SELECT SUM(quantity * price) FROM cart) AS overall_total
+    // FROM cart`,//for previous output
+
+    console.log("Data retrieved successfully");
+    console.log(result.rows);
+
+    if (result.rows.length > 0) {
+      let tableRows = "";
+      for (const row of result.rows) {
+        tableRows += `
         <tr>
           <td class="text-left">${row.PRODUCT_IDD}</td>
           <td class="text-left">${row.QUANTITY}</td>
@@ -382,9 +384,9 @@ app.post("/check-out", async function (req, res) {
           
         </tr>
       `;
-    }
-    res.send(
-      `
+      }
+      res.send(
+        `
       <head> <link rel="stylesheet" href="table.css" /> </head>
       <body>
         <div class="table-title">
@@ -406,45 +408,30 @@ app.post("/check-out", async function (req, res) {
         </table>
       </body>
       `
-    );
-  } else {
-    res.send(
-      `No record found in the database`
-    );
-  }
-    }  
-  catch (err) {
-      console.error(err);
+      );
+    } else {
+      res.send(`No record found in the database`);
     }
-  
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 ////////////////CANCEL BUTTON
 app.post("/cancel", async function (req, res) {
   console.log("/check-out route called");
   const connection = await getConnection();
-  
-    
-    try {
-      
-      const result = await connection.execute(
-        `TRUNCATE TABLE Product`,
-        );
-      console.log('CART IS EMPTIED');
-      console.log(result.rows);
-      
-        res.send("cart is being emptied");
-      
-    } catch (err) {
-      console.error(err);
-    }
-  
 
+  try {
+    const result = await connection.execute(`TRUNCATE TABLE Product`);
+    console.log("CART IS EMPTIED");
+    console.log(result.rows);
 
+    res.send("cart is being emptied");
+  } catch (err) {
+    console.error(err);
+  }
 });
-
-
-
 
 // Closing the database connection.
 app.get("/close", function (req, res) {

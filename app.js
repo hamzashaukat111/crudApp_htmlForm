@@ -26,6 +26,7 @@ async function getConnection() {
 const oracledb = require("oracledb");
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
+
 // async function fun() {
 /// i also removed this code bcz it was inserting name
 //and id khudi default wala everytime the node was running
@@ -248,12 +249,13 @@ app.post("/delete", async function (req, res) {
 
 
 ///////////////
-async function addToCart(product_idd, price, quantity) {
+async function addToCart(product_idd, price, quantity,itemID) {
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
   console.log("price:", price);
   console.log("quantity:", quantity);
+  console.log("itemId:", itemID);
 
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
@@ -264,8 +266,8 @@ async function addToCart(product_idd, price, quantity) {
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-        "INSERT INTO cart(product_idd,price,quantity) VALUES(:product_idd,:price,:quantity)",
-        [product_idd, price, quantity],
+        "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
+        [product_idd, price, quantity,itemID],
         function (err) {
           if (err) {
             return console.log(err.message);
@@ -287,6 +289,7 @@ app.post("/add-to-cart", async function (req, res) {
   const product_idd = req.body.product_idd;
   const price = req.body.price;
   const quantity = req.body.quantity;
+  const itemID = req.body.itemID;
 
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
@@ -295,7 +298,7 @@ app.post("/add-to-cart", async function (req, res) {
     await updateQuantity(product_idd, quantity);
   } else {
     // add new product to cart
-    await addToCart(product_idd, price, quantity);
+    await addToCart(product_idd, price, quantity,itemID);
   }
   res.send({ message: "Product added to cart successfully" });
 });
@@ -305,7 +308,7 @@ async function checkIfProductExists(product_idd) {
 
   try {
     const sql = await connection.execute(
-      "SELECT COUNT(*) as count FROM cart WHERE product_idd = :product_idd",
+      "SELECT COUNT(*) as count FROM Product WHERE product_idd = :product_idd",
       [product_idd],
       function (err, result) {
         if (err) {
@@ -328,7 +331,7 @@ async function updateQuantity(product_idd, quantity) {
 
   try {
     const sql2 = await con.execute(
-      "UPDATE cart SET quantity = quantity + :quantity WHERE product_idd = :product_idd",
+      "UPDATE Product SET quantity = quantity + :quantity WHERE product_idd = :product_idd",
       [product_idd, quantity],
       function (err) {
         if (err) {
@@ -343,64 +346,8 @@ async function updateQuantity(product_idd, quantity) {
     console.error(err);
   }
 }
-///////////////////2ndcart////////////////
 
-app.post("/add-to-cart-1", async function (req, res) {
-  console.log("/add-to-cart route called");
 
-  const product_idd = req.body.product_idd;
-  const price = req.body.price;
-  const quantity = req.body.quantity;
-
-  // check if product already exists in cart
-  const exists = await checkIfProductExists(product_idd);
-  if (exists) {
-    // update quantity if product already exists
-    await updateQuantity(product_idd, quantity);
-  } else {
-    // add new product to cart
-    await addToCart(product_idd, price, quantity);
-  }
-  res.send({ message: "Product added to cart successfully" });
-});
-////////////3rd
-app.post("/add-to-cart-2", async function (req, res) {
-  console.log("/add-to-cart route called");
-
-  const product_idd = req.body.product_idd;
-  const price = req.body.price;
-  const quantity = req.body.quantity;
-
-  // check if product already exists in cart
-  const exists = await checkIfProductExists(product_idd);
-  if (exists) {
-    // update quantity if product already exists
-    await updateQuantity(product_idd, quantity);
-  } else {
-    // add new product to cart
-    await addToCart(product_idd, price, quantity);
-  }
-  res.send({ message: "Product added to cart successfully" });
-});
-///////////4th
-app.post("/add-to-cart-3", async function (req, res) {
-  console.log("/add-to-cart route called");
-
-  const product_idd = req.body.product_idd;
-  const price = req.body.price;
-  const quantity = req.body.quantity;
-
-  // check if product already exists in cart
-  const exists = await checkIfProductExists(product_idd);
-  if (exists) {
-    // update quantity if product already exists
-    await updateQuantity(product_idd, quantity);
-  } else {
-    // add new product to cart
-    await addToCart(product_idd, price, quantity);
-  }
-  res.send({ message: "Product added to cart successfully" });
-});
 
 ////////checkout:
 app.post("/check-out", async function (req, res) {
@@ -411,10 +358,10 @@ app.post("/check-out", async function (req, res) {
       
       const result = await connection.execute(
         `(SELECT product_idd, quantity, price, quantity * price AS total_price
-          FROM cart)
+          FROM Product)
          UNION ALL
          (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, SUM(quantity * price) AS total_price
-          FROM cart)`, // Add a closing parenthesis here
+          FROM Product)`, // Add a closing parenthesis here
       );
       // `SELECT product_idd, quantity, price, quantity * price AS total_price,
       // (SELECT SUM(quantity * price) FROM cart) AS overall_total
@@ -481,7 +428,7 @@ app.post("/cancel", async function (req, res) {
     try {
       
       const result = await connection.execute(
-        `TRUNCATE TABLE cart`,
+        `TRUNCATE TABLE Product`,
         );
       console.log('CART IS EMPTIED');
       console.log(result.rows);

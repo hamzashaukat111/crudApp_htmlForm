@@ -75,29 +75,14 @@
               <input type="hidden" name="price" value="250" />
               <label id="label">Quantity</label>
               <input id='quantity'type="text" name="quantity" size="10" />
+              <input type="hidden" name="itemID" value="1" />
+
               <!-- <button class="fill">Fill In</button> -->
               <button class='btn'type="submit">Add to Cart</button>
             </form>
            
 
-            <!-- a = (a < 0) ? "0" + a : a -->
-            <!-- <script>
-              const plusJ = document.querySelector(".plusJ"),
-                minusJ = document.querySelector(".minusJ"),
-                numJ = document.querySelector(".numJ");
-              let J = 0;
-
-              plusJ.addEventListener("click", () => {
-                J++;
-                numJ.innerText = J;
-              });
-
-              minusJ.addEventListener("click", () => {
-                J--;
-                J = J < 0 ? "0" : J;
-                numJ.innerText = J;
-              });
-            </script> -->
+          
           </center>
         </jacket>
 
@@ -123,14 +108,14 @@
               <span class="numH"> 0 </span>
               <span class="plusH"> + </span>
             </div> -->
-            <form action="/add-to-cart-1" method="POST">
+            <form action="/add-to-cart" method="POST">
               <!-- product information and "Add to Cart" button go here -->
               <!-- <input type="hidden" name="customer_id" value="12345" /> -->
               <input type="hidden" name="product_idd" value="2" />
               <input type="hidden" name="price" value="550" />
               <label id="label">Quantity</label>
               <input id='quantity'type="text" name="quantity" size="10" />
-              <!-- <button class="fill">Fill In</button> -->
+              <input type="hidden" name="itemID" value="2" />
               <button class='btn'type="submit">Add to Cart</button>
             </form>
 
@@ -176,13 +161,13 @@
               <span class="numS"> 0 </span>
               <span class="plusS"> + </span>
             </div> -->
-            <form action="/add-to-cart-2" method="POST">
+            <form action="/add-to-cart" method="POST">
               <!-- product information and "Add to Cart" button go here -->
               <input type="hidden" name="product_idd" value="3" />
               <input type="hidden" name="price" value="350" />
               <label id="label">Quantity</label>
               <input id='quantity'type="text" name="quantity" size="10" />
-              <!-- <button class="fill">Fill In</button> -->
+              <input type="hidden" name="itemID" value="3" />
               <button class='btn'type="submit">Add to Cart</button>
             </form>
 
@@ -228,12 +213,12 @@
               <span class="numJJ"> 0 </span>
               <span class="plusJJ"> + </span>
             </div> -->
-            <form action="/add-to-cart-3" method="POST">
+            <form action="/add-to-cart" method="POST">
             <input type="hidden" name="product_idd" value="4" />
               <input type="hidden" name="price" value="750" />
               <label id="label">Quantity</label>
               <input id='quantity'type="text" name="quantity" size="10" />
-              <!-- <button class="fill">Fill In</button> -->
+              <input type="hidden" name="itemID" value="4" />
               <button class='btn'type="submit">Add to Cart</button>
             </form>
             <!-- a = (a < 0) ? "0" + a : a -->

@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+      rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+       crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="s2.css" type="text/css">
+    
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mens Fashion store</title>
+    <title>outfitters store</title>
     <link rel="stylesheet" href="styleSheet.css" />
   </head>
 
   <body id="[blazerId].exercise3.html">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a href="#" class="navbar-brand font-weight-bold"
+          ><i class="fas fa-tshirt"></i> OUTFITTERS</a>
+
+          <div class="collapse navbar-collapse justify-content-end "
+           id="navbarNavAltMarkup">
+            <div class="navbar-nav  justify-items-stretch ">
+              <a class="nav-link active" aria-current="page" href="login1.html">LOGIN</a>
+              <a class="nav-link" href="itemCatalog.html">ITEM CATALOG</a>
+              <a class="nav-link" href="\public\form.html" target="_self">EMPLOYEE</a>
+              <a class="nav-link" href="index.html" target="_self">HOME</a>
+              <a class="nav-link" href="aboutUs.html" tabindex="-1"
+               aria-disabled="true">ABOUT US</a>
+            
+          
+                
+          </div>
+
+       
+        
+      </div>
+      </nav>
     <logo class="logo">
       <center>
         <img
@@ -17,33 +51,15 @@
           width="100px"
           height="100px"
         />
-        <big> Mens Fashion Store </big>
+        <big> Store </big>
       </center>
     </logo>
 
-    <nav class="menu-bar">
-      <hr />
-      <ul>
-        <li class="active">
-          <a href="index.html"> Home </a>
-        </li>
-        <li>
-          <a href="itemCatalog.html"> Item Catalog </a>
-        </li>
-        <li>
-          <a href="viewCart.html"> View Cart </a>
-        </li>
-        <li>
-          <a href="aboutUs.html"> About Us </a>
-        </li>
-      </ul>
-      <hr />
-    </nav>
 
     <main>
       <center>
         <h1>Items in stock: <br /></h1>
-        <h2>Men Clothing: <br /></h2>
+        <!-- <h2>Men Clothing: <br /></h2> -->
       </center>
       <categories1 class="cat">
         <jacket class="items">
@@ -56,26 +72,30 @@
           <h3>
             <u>
               <b>
-                <center>Jacket<br /></center>
+                <center>SHIRTS<br /></center>
               </b>
             </u>
           </h3>
           <center>
-            Price = 250$<br />
-            Denim Jacket from <i>Levis</i> available with very fine quality.<br />
-            <!-- <div class="wrapper">
-              <span action="/minus" class="minusJ"> - </span>
-              <span class="numJ"> 0 </span>
-              <span class="plusJ"> + </span>
-            </div> -->
+            Price = 1500<br />
+            <!-- Denim Jacket from <i>Levis</i> available with very fine quality.<br /> -->
+            
             <form action="/add-to-cart" method="POST">
-              <!-- product information and "Add to Cart" button go here -->
-              <!-- <input type="hidden" name="customer_id" value="12345" /> -->
               <input type="hidden" name="product_idd" value="1" />
-              <input type="hidden" name="price" value="250" />
+              <input type="hidden" name="price" value="1500" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
               <input type="hidden" name="itemID" value="1" />
+              <label for="size-chart">size:</label>
+<select name="sizee" id="size-chart">
+  <!-- <option value="XS">E</option> -->
+  <option name="sizee" value="S">Small</option>
+  <option name="sizee" value="M">Medium</option>
+  <option name="sizee"  value="L">Large</option>
+  <option name="sizee"  value="XL">Extra Large</option>
+</select>
+
+<br><br>
 
               <!-- <button class="fill">Fill In</button> -->
               <button class="btn" type="submit">Add to Cart</button>
@@ -93,47 +113,32 @@
           <h3>
             <u>
               <b>
-                <center>Hoodie<br /></center>
+                <center>JEANS<br /></center>
               </b>
             </u>
           </h3>
           <center>
-            Price = 550$<br />
-            Hoodie from <i>Tommy Hilfiger</i> available with very fine quality.
-            <!-- <div class="wrapper">
-              <span class="minusH"> - </span>
-              <span class="numH"> 0 </span>
-              <span class="plusH"> + </span>
-            </div> -->
+            Price = 2500<br />
+           
             <form action="/add-to-cart" method="POST">
-              <!-- product information and "Add to Cart" button go here -->
-              <!-- <input type="hidden" name="customer_id" value="12345" /> -->
               <input type="hidden" name="product_idd" value="2" />
-              <input type="hidden" name="price" value="550" />
+              <input type="hidden" name="price" value="2500" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
               <input type="hidden" name="itemID" value="2" />
+              <label for="size-chart">size:</label>
+              <select name="sizee" id="size-chart">
+                <!-- <option value="XS">E</option> -->
+                <option name="sizee" value="S">Small</option>
+                <option name="sizee" value="M">Medium</option>
+                <option name="sizee"  value="L">Large</option>
+                <option name="sizee"  value="XL">Extra Large</option>
+              </select>
+              
+              <br><br>
               <button class="btn" type="submit">Add to Cart</button>
             </form>
 
-            <!-- a = (a < 0) ? "0" + a : a -->
-            <!-- <script>
-              const plusH = document.querySelector(".plusH"),
-                minusH = document.querySelector(".minusH"),
-                numH = document.querySelector(".numH");
-              let H = 1;
-
-              plusH.addEventListener("click", () => {
-                H++;
-                numH.innerText = H;
-              });
-
-              minusH.addEventListener("click", () => {
-                H--;
-                H = H < 0 ? "0" : H;
-                numH.innerText = H;
-              });
-            </script> -->
           </center>
         </hoodie>
         <shirt class="items">
@@ -146,51 +151,38 @@
           <h3>
             <u>
               <b>
-                <center>Shirt<br /></center>
+                <center>JACKETS<br /></center>
               </b>
             </u>
           </h3>
           <center>
-            Price = 150$<br />
-            Shirt from <i>Cougar</i> available with very fine quality.
-            <!-- <div class="wrapper">
-              <span class="minusS"> - </span>
-              <span class="numS"> 0 </span>
-              <span class="plusS"> + </span>
-            </div> -->
+            Price = 3000<br />
+           
             <form action="/add-to-cart" method="POST">
               <!-- product information and "Add to Cart" button go here -->
               <input type="hidden" name="product_idd" value="3" />
-              <input type="hidden" name="price" value="350" />
+              <input type="hidden" name="price" value="3000" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
               <input type="hidden" name="itemID" value="3" />
+              <label for="size-chart">size:</label>
+              <select name="sizee" id="size-chart">
+                <!-- <option value="XS">E</option> -->
+                <option name="sizee" value="S">Small</option>
+                <option name="sizee" value="M">Medium</option>
+                <option name="sizee"  value="L">Large</option>
+                <option name="sizee"  value="XL">Extra Large</option>
+              </select>
+              
+              <br><br>
               <button class="btn" type="submit">Add to Cart</button>
             </form>
 
-            <!-- a = (a < 0) ? "0" + a : a -->
-            <!-- <script>
-              const plusS = document.querySelector(".plusS"),
-                minusS = document.querySelector(".minusS"),
-                numS = document.querySelector(".numS");
-              let S = 1;
-
-              plusS.addEventListener("click", () => {
-                S++;
-                numS.innerText = S;
-              });
-
-              minusS.addEventListener("click", () => {
-                S--;
-                S = S < 0 ? "0" : S;
-                numS.innerText = S;
-              });
-            </script> -->
           </center>
         </shirt>
         <jeans class="items">
           <img
-            src="images\jeans.jpg"
+            src="images\F.jpg"
             alt="Check URL"
             width="300px"
             height="300px"
@@ -198,152 +190,86 @@
           <h3>
             <u>
               <b>
-                <center>Jeans<br /></center>
+                <center>FORMALS<br /></center>
               </b>
             </u>
           </h3>
           <center>
-            Price = 130$<br />
-            Jeans from <i>Levis</i> available with very fine quality.
-            <!-- <div class="wrapper">
-              <span class="minusJJ"> - </span>
-              <span class="numJJ"> 0 </span>
-              <span class="plusJJ"> + </span>
-            </div> -->
+            Price = 3500<br />
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="4" />
-              <input type="hidden" name="price" value="750" />
+              <input type="hidden" name="price" value="3500" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
               <input type="hidden" name="itemID" value="4" />
+              <label for="size-chart">size:</label>
+              <select name="sizee" id="size-chart">
+                <!-- <option value="XS">E</option> -->
+                <option name="sizee" value="S">Small</option>
+                <option name="sizee" value="M">Medium</option>
+                <option name="sizee"  value="L">Large</option>
+                <option name="sizee"  value="XL">Extra Large</option>
+              </select>
+              
+              <br><br>
               <button class="btn" type="submit">Add to Cart</button>
             </form>
-            <!-- a = (a < 0) ? "0" + a : a -->
-            <!-- <script>
-              const plusJJ = document.querySelector(".plusJJ"),
-                minusJJ = document.querySelector(".minusJJ"),
-                numJJ = document.querySelector(".numJJ");
-              let JJ = 1;
-
-              plusJJ.addEventListener("click", () => {
-                JJ++;
-                numJJ.innerText = JJ;
-              });
-
-              minusJJ.addEventListener("click", () => {
-                JJ--;
-                JJ = JJ < 0 ? "0" : JJ;
-                numJJ.innerText = JJ;
-              });
-            </script> -->
+            
           </center>
         </jeans>
+
+       
       </categories1>
       <br />
 
+  
+      <categories2 class="cat">
+        <jeans class="items">
+          <img
+            src="images\S.jpg"
+            alt="Check URL"
+            width="300px"
+            height="300px"
+          />
+          <h3>
+            <u>
+              <b>
+                <center>SHALWAR KAMEEZ<br /></center>
+              </b>
+            </u>
+          </h3>
+          <center>
+            Price = 2000<br />
+            <form action="/add-to-cart" method="POST">
+              <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="price" value="2000" />
+              <label id="label">Quantity</label>
+              <input id="quantity" type="text" name="quantity" size="10" />
+              <input type="hidden" name="itemID" value="4" />
+              <label for="size-chart">size:</label>
+              <select name="sizee" id="size-chart">
+                <!-- <option value="XS">E</option> -->
+                <option name="sizee" value="S">Small</option>
+                <option name="sizee" value="M">Medium</option>
+                <option name="sizee"  value="L">Large</option>
+                <option name="sizee"  value="XL">Extra Large</option>
+              </select>
+              
+              <br><br>
+              <button class="btn" type="submit">Add to Cart</button>
+            </form>
+            
+          </center>
+        </jeans>
+      
+      </categories2> 
+      <br>
       <form action="/check-out" method="POST">
         <button class="btn1">checkout</button>
       </form>
       <form action="/cancel" method="POST">
         <button class="btn1">cancel</button>
       </form>
-
-      <!-- <center>
-        <h2>Men Accessories: <br /></h2>
-      </center>
-      <categories2 class="cat">
-        <watch class="items">
-          <img
-            src="images\watch.jpg"
-            alt="Check URL"
-            width="300px"
-            height="300px"
-          />
-          <h3>
-            <u>
-              <b>
-                <center>Wrist Watch<br /></center>
-              </b>
-            </u>
-          </h3>
-          <center>
-            Price = 500$<br />
-            Wrist Watch from <i>Tissot</i> available with very fine quality.
-            <div class="wrapper">
-              <span class="minusW"> - </span>
-              <span class="numW"> 0 </span>
-              <span class="plusW"> + </span>
-            </div>
-
-            <a = (a < 0) ? "0" + a : a -->
-      <!-- <script>
-              const plusW = document.querySelector(".plusW"),
-                minusW = document.querySelector(".minusW"),
-                numW = document.querySelector(".numW");
-              let W = 1;
-
-              plusW.addEventListener("click", () => {
-                W++;
-                numW.innerText = W;
-              });
-
-              minusW.addEventListener("click", () => {
-                minusW.addEventListener("click", () => {
-                  if (W > 0) {
-                    W--;
-                    numW.innerText = W;
-                  }
-                });
-              });
-            </script>
-          </center>
-        </watch>
-        <bracelet class="items">
-          <img
-            src="images\bracelet.jpg"
-            alt="Check URL"
-            width="300px"
-            height="300px"
-          />
-          <h3>
-            <u>
-              <b>
-                <center>Bracelet<br /></center>
-              </b>
-            </u>
-          </h3>
-          <center>
-            Price = 60$<br />
-            Bracelets from <i>Seek Discomfort</i> available with very fine
-            quality.
-            <div class="wrapper">
-              <span class="minusB"> - </span>
-              <span class="numB"> 0 </span>
-              <span class="plusB"> + </span>
-            </div> -->
-
-      <!-- a = (a < 0) ? "0" + a : a -->
-      <!-- <script>
-              const plusB = document.querySelector(".plusB"),
-                minusB = document.querySelector(".minusB"),
-                numB = document.querySelector(".numB");
-              let B = 1;
-
-              plusB.addEventListener("click", () => {
-                B++;
-                numB.innerText = B;
-              });
-
-              minusB.addEventListener("click", () => {
-                if (B > 0) {
-                  B--;
-                  numB.innerText = B;
-                }
-              });
-            </script>
-          </center>
-        </bracelet>
-      </categories2>  -->
     </main>
   </body>
 </html>

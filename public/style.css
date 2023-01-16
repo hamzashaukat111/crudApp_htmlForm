@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap');
+
 body{
-	background-color: #cce6ff;
+	background-color:white;
+	font-family: 'Quicksand';
 }
 header{
 	text-align: center;
 	height: 100px;
 	padding-top: 1px;
-	background-color: #3399ff;
-	color: #FFFFFF;
+	background-color: #7a627c;
+	color: black;
 	font-size: x-large;
 }
 
@@ -14,7 +17,12 @@ header{
 h3{
 	margin-top: 2px;
 	text-align: center;
-	background-color: #80bfff;
+	background-color:#a48da7;
+	font-weight: bold;
+}
+label{
+	font-weight: bold;
+	font-family: 'Quicksand';
 }
 
 form{

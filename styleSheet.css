@@ -21,19 +21,9 @@
 body {
     
 
-    /* background-color: rgba(115, 92, 153, 0.5); */
+   
 
-
-    /* background: url(mainBackground.png); */
-    /* background-size: auto;
-    background-position: center; 
-    /* background-image: url('images/b.jpg');
-  background-size: cover;
-  opacity: 0.5; */
-
-  background: -webkit-linear-gradient(left, #e4dee6 0%, #e6e0eb 100%);
-            background: -o-linear-gradient(left, #d8d1db 0%, #cfc9d1 100%);
-            background: linear-gradient(to right, #dfd6e2 0%, #cec9d1 100%);
+  background: white;
             position: relative;
             height: 100vh;
             font-family: 'Quicksand';
@@ -94,7 +84,7 @@ body {
     width: 300px;
     height: 500px;
     box-shadow: -1px 0 10px black;
-    background-color: rgb(138, 124, 137);
+    background-color: rgb(228, 219, 219);
    
 }
 
@@ -220,6 +210,26 @@ footer {
     background-color: #030303; 
     color: rgb(243, 243, 247);
   }
+
+  select {
+    background-color: #fdfafa;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    padding: 12px;
+    width: 20px;
+    border-radius: 8px;
+  }
+  
+  option {
+    background-color: rgb(223, 222, 222);
+    color: #000;
+    padding: 12px;
+    font-weight: 800;
+    font-family: 'Quicksand';
+    font-size: 13px;
+    border-radius: 5px;
+  }
+  
 
 
   

@@ -253,7 +253,7 @@ app.post("/delete", async function (req, res) {
   }
 });
 
-///////////////
+
 async function addToCart(product_idd, price, quantity, itemID) {
   const connection = await getConnection();
   console.log("addToCart function called");
@@ -261,6 +261,7 @@ async function addToCart(product_idd, price, quantity, itemID) {
   console.log("price:", price);
   console.log("quantity:", quantity);
   console.log("itemId:", itemID);
+  console.log("customerId", customerId);
 
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
@@ -278,6 +279,7 @@ async function addToCart(product_idd, price, quantity, itemID) {
             return console.log(err.message);
           }
           console.log("New product has been added");
+          console.log(`addCart function from customer id ${customerId}`);
         }
       );
 
@@ -287,6 +289,40 @@ async function addToCart(product_idd, price, quantity, itemID) {
     }
   }
 }
+// ///////////////
+// async function addToCart(product_idd, price, quantity, itemID) {
+//   const connection = await getConnection();
+//   console.log("addToCart function called");
+//   console.log("productId:", product_idd);
+//   console.log("price:", price);
+//   console.log("quantity:", quantity);
+//   console.log("itemId:", itemID);
+
+//   // Check if the product already exists in the cart
+//   const exists = await checkIfProductExists(product_idd);
+//   if (exists) {
+//     // Update the quantity of the existing product
+//     await updateQuantity(product_idd, quantity);
+//   } else {
+//     // Insert a new row into the cart table
+//     try {
+//       const data = await connection.execute(
+//         "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
+//         [product_idd, price, quantity, itemID],
+//         function (err) {
+//           if (err) {
+//             return console.log(err.message);
+//           }
+//           console.log("New product has been added");
+//         }
+//       );
+
+//       connection.commit();
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   }
+// }
 //inertion :
 app.post("/add-to-cart", async function (req, res) {
   console.log("/add-to-cart route called");
@@ -467,9 +503,18 @@ app.post("/loginDetails", async function (req, res) {
   }
 });
 
+
+
+
+
+
+
+
+let customerId;
 ////login
 app.post("/login", async function (req, res) {
   const connection = await getConnection();
+  // let customerId;
 
   try {
     const data = await connection.execute(
@@ -479,7 +524,10 @@ app.post("/login", async function (req, res) {
     // check if data array is not empty, then redirect
     if (data.rows.length > 0) {
       console.log(`user with id just logged in`);
-      res.redirect("/itemcatalog.html");
+      customerId = req.body.customerId;
+      console.log(customerId);
+      //res.redirect("/itemcatalog.html");
+      res.redirect(`/itemcatalog.html#${req.body.customerId}`);
     } else {
       console.log("Invalidd credentials");
       res.send("Invalid credentials");
@@ -488,6 +536,27 @@ app.post("/login", async function (req, res) {
     console.error(err);
   }
 });
+// ////login
+// app.post("/login", async function (req, res) {
+//   const connection = await getConnection();
+
+//   try {
+//     const data = await connection.execute(
+//       "SELECT * FROM CUSTOME WHERE Customer_id = :customerId AND Customer_pw = :customerPassword",
+//       [req.body.customerId, req.body.customerPassword]
+//     );
+//     // check if data array is not empty, then redirect
+//     if (data.rows.length > 0) {
+//       console.log(`user with id just logged in`);
+//       res.redirect("/itemcatalog.html");
+//     } else {
+//       console.log("Invalidd credentials");
+//       res.send("Invalid credentials");
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 
 // Closing the database connection.
 app.get("/close", function (req, res) {

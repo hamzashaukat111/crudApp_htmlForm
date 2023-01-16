@@ -7,6 +7,12 @@
      background-attachment: fixed;
      width: 100%;
      height: 660px;
+     /* <img
+     src="images\download.png"
+     alt="Check URL"
+     width="100px"
+     height="100px"
+   /> */
      
  }
  .headerset{
@@ -43,7 +49,7 @@
  }
  .services{
      padding: 100px 0px 60px;
-     
+     background-color: white;
      height: 700px;
  }
  .services h1{
@@ -108,3 +114,8 @@
     color: rgb(5, 5, 5);
     font-weight: bold;
  }
+ .icon-img{
+    width: 60px;
+    height: 60px;
+  }
+  

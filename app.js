@@ -254,14 +254,14 @@ app.post("/delete", async function (req, res) {
 });
 
 
-async function addToCart(product_idd, price, quantity, itemID) {
+async function addToCart(product_idd, price, quantity, itemID,sizee) {
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
   console.log("price:", price);
   console.log("quantity:", quantity);
   console.log("itemId:", itemID);
-  console.log("customerId", customerId);
+  console.log("size", sizee);
 
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
@@ -272,8 +272,8 @@ async function addToCart(product_idd, price, quantity, itemID) {
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-        "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
-        [product_idd, price, quantity, itemID],
+        "INSERT INTO Product(product_idd,price,quantity,itemID,sizee) VALUES(:product_idd,:price,:quantity,:itemID,:sizee)",
+        [product_idd, price, quantity, itemID,sizee],
         function (err) {
           if (err) {
             return console.log(err.message);
@@ -331,6 +331,7 @@ app.post("/add-to-cart", async function (req, res) {
   const price = req.body.price;
   const quantity = req.body.quantity;
   const itemID = req.body.itemID;
+  const sizee = req.body.sizee;
 
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
@@ -339,7 +340,7 @@ app.post("/add-to-cart", async function (req, res) {
     await updateQuantity(product_idd, quantity);
   } else {
     // add new product to cart
-    await addToCart(product_idd, price, quantity, itemID);
+    await addToCart(product_idd, price, quantity, itemID,sizee);
   }
   res.send({ message: "Product added to cart successfully" });
 });

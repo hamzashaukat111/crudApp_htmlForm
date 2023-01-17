@@ -254,7 +254,17 @@ app.post("/delete", async function (req, res) {
 });
 
 
-async function addToCart(product_idd, price, quantity, itemID,sizee) {
+
+let customerId;
+async function addToCart(
+  product_idd,
+  price,
+  quantity,
+  itemID,
+  sizee,
+  customerId
+) {
+
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
@@ -262,6 +272,9 @@ async function addToCart(product_idd, price, quantity, itemID,sizee) {
   console.log("quantity:", quantity);
   console.log("itemId:", itemID);
   console.log("size", sizee);
+
+  console.log("customerId", customerId);
+
 
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
@@ -272,8 +285,10 @@ async function addToCart(product_idd, price, quantity, itemID,sizee) {
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-        "INSERT INTO Product(product_idd,price,quantity,itemID,sizee) VALUES(:product_idd,:price,:quantity,:itemID,:sizee)",
-        [product_idd, price, quantity, itemID,sizee],
+
+        "INSERT INTO Product(product_idd,price,quantity,itemID,sizee,customer_id) VALUES(:product_idd,:price,:quantity,:itemID,:sizee,:customer_id)",
+        [product_idd, price, quantity, itemID, sizee, customerId],
+
         function (err) {
           if (err) {
             return console.log(err.message);
@@ -289,14 +304,19 @@ async function addToCart(product_idd, price, quantity, itemID,sizee) {
     }
   }
 }
-// ///////////////
-// async function addToCart(product_idd, price, quantity, itemID) {
+
+// async function addToCart(product_idd, price, quantity, itemID,sizee) {
+
+
 //   const connection = await getConnection();
 //   console.log("addToCart function called");
 //   console.log("productId:", product_idd);
 //   console.log("price:", price);
 //   console.log("quantity:", quantity);
 //   console.log("itemId:", itemID);
+
+//   console.log("size", sizee);
+
 
 //   // Check if the product already exists in the cart
 //   const exists = await checkIfProductExists(product_idd);
@@ -307,13 +327,18 @@ async function addToCart(product_idd, price, quantity, itemID,sizee) {
 //     // Insert a new row into the cart table
 //     try {
 //       const data = await connection.execute(
-//         "INSERT INTO Product(product_idd,price,quantity,itemID) VALUES(:product_idd,:price,:quantity,:itemID)",
-//         [product_idd, price, quantity, itemID],
+
+//         "INSERT INTO Product(product_idd,price,quantity,itemID,sizee) VALUES(:product_idd,:price,:quantity,:itemID,:sizee)",
+//         [product_idd, price, quantity, itemID,sizee],
+
 //         function (err) {
 //           if (err) {
 //             return console.log(err.message);
 //           }
 //           console.log("New product has been added");
+
+//           console.log(`addCart function from customer id ${customerId}`);
+
 //         }
 //       );
 
@@ -323,7 +348,11 @@ async function addToCart(product_idd, price, quantity, itemID,sizee) {
 //     }
 //   }
 // }
-//inertion :
+
+
+
+
+
 app.post("/add-to-cart", async function (req, res) {
   console.log("/add-to-cart route called");
 
@@ -333,6 +362,9 @@ app.post("/add-to-cart", async function (req, res) {
   const itemID = req.body.itemID;
   const sizee = req.body.sizee;
 
+  //const customerId = req.body.customerId; // or you can use the global variable if you want
+
+
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
   if (exists) {
@@ -340,10 +372,34 @@ app.post("/add-to-cart", async function (req, res) {
     await updateQuantity(product_idd, quantity);
   } else {
     // add new product to cart
-    await addToCart(product_idd, price, quantity, itemID,sizee);
+
+    await addToCart(product_idd, price, quantity, itemID, sizee, customerId);
+
   }
   res.send({ message: "Product added to cart successfully" });
 });
+
+// //inertion :
+// app.post("/add-to-cart", async function (req, res) {
+//   console.log("/add-to-cart route called");
+
+//   const product_idd = req.body.product_idd;
+//   const price = req.body.price;
+//   const quantity = req.body.quantity;
+//   const itemID = req.body.itemID;
+//   const sizee = req.body.sizee;
+
+//   // check if product already exists in cart
+//   const exists = await checkIfProductExists(product_idd);
+//   if (exists) {
+//     // update quantity if product already exists
+//     await updateQuantity(product_idd, quantity);
+//   } else {
+//     // add new product to cart
+//     await addToCart(product_idd, price, quantity, itemID,sizee);
+//   }
+//   res.send({ message: "Product added to cart successfully" });
+// });
 
 async function checkIfProductExists(product_idd) {
   const connection = await getConnection();
@@ -396,15 +452,13 @@ app.post("/check-out", async function (req, res) {
 
   try {
     const result = await connection.execute(
-      `(SELECT product_idd, quantity, price, quantity * price AS total_price
+      `(SELECT product_idd, quantity, price,sizee, quantity * price AS total_price
           FROM Product)
          UNION ALL
-         (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, SUM(quantity * price) AS total_price
+         (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
           FROM Product)` // Add a closing parenthesis here
     );
-    // `SELECT product_idd, quantity, price, quantity * price AS total_price,
-    // (SELECT SUM(quantity * price) FROM cart) AS overall_total
-    // FROM cart`,//for previous output
+    
 
     console.log("Data retrieved successfully");
     console.log(result.rows);
@@ -417,6 +471,7 @@ app.post("/check-out", async function (req, res) {
           <td class="text-left">${row.PRODUCT_IDD}</td>
           <td class="text-left">${row.QUANTITY}</td>
           <td class="text-left">${row.PRICE}</td>
+          <td class="text-left">${row.SIZEE}</td>
           <td class="text-left">${row.TOTAL_PRICE}</td>
           
         </tr>
@@ -427,7 +482,7 @@ app.post("/check-out", async function (req, res) {
       <head> <link rel="stylesheet" href="table.css" /> </head>
       <body>
         <div class="table-title">
-          <h3>Data Table</h3>
+          <h3>CART DETAIL</h3>
         </div>
         <table class="table-fill">
           <thead>
@@ -435,6 +490,7 @@ app.post("/check-out", async function (req, res) {
               <th class="text-left">PRODUCT_ID</th>
               <th class="text-left">QUANTITY</th>
               <th class="text-left">PRICE</th>
+              <th class="text-left">SIZEE</th>
               <th class="text-left">TOTAL_PRICE</th>
               
             </tr>
@@ -511,7 +567,9 @@ app.post("/loginDetails", async function (req, res) {
 
 
 
-let customerId;
+
+//let customerId;
+
 ////login
 app.post("/login", async function (req, res) {
   const connection = await getConnection();
@@ -558,6 +616,79 @@ app.post("/login", async function (req, res) {
 //     console.error(err);
 //   }
 // });
+
+
+///RECEIPT VIEW:
+
+app.post("/receipt", async function (req, res) {
+  console.log("/check-out route called");
+  const connection = await getConnection();
+
+  try {
+    const result = await connection.execute(
+      `SELECT * FROM v_cart_receiipptt` // Add a closing parenthesis here
+    );
+    
+
+    console.log("Data retrieved successfully");
+    console.log(result.rows);
+
+    if (result.rows.length > 0) {
+      let tableRows = "";
+      for (const row of result.rows) {
+        tableRows += `
+        <tr>
+        <td class="text-left">${row.CUSTOMER_NAME}</td>
+          <td class="text-left">${row.CUSTOMER_ADDRESS}</td>
+          <td class="text-left">${row.CUSTOMER_NO}</td>
+          <td class="text-left">${row.ORDER_DATE}</td>
+          <td class="text-left">${row.PRODUCT_IDD}</td>
+          <td class="text-left">${row.QUANTITY}</td>
+          <td class="text-left">${row.PRICE}</td>
+          <td class="text-left">${row.TOTAL_PRICE}</td>
+          <td class="text-left">${row.GRAND_TOTAL}</td>
+          
+        </tr>
+      `;
+      }
+      res.send(
+        `
+      <head> <link rel="stylesheet" href="table.css" /> </head>
+      <body>
+        <div class="table-title">
+          <h3>ORDER RECEIPT</h3>
+        </div>
+        <table class="table-fill">
+          <thead>
+            <tr>
+            <th class="text-left">CUSTOMER_NAME</th>
+            <th class="text-left">CUSTOMER_ADDRESS</th>
+            <th class="text-left">CUSTOMER_NO</th>
+            <th class="text-left">ORDER_DATE</th>
+              <th class="text-left">PRODUCT_ID</th>
+              <th class="text-left">QUANTITY</th>
+              <th class="text-left">PRICE</th>
+              <th class="text-left">TOTAL_PRICE</th>
+              <th class="text-left">GRAND_TOTAL</th>
+              
+            </tr>
+          </thead>
+          <tbody class="table-hover">
+            ${tableRows}
+          </tbody>
+        </table>
+      </body>
+      `
+      );
+    } else {
+      res.send(`No record found in the database`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+
 
 // Closing the database connection.
 app.get("/close", function (req, res) {

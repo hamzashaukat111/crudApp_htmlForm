@@ -294,6 +294,7 @@ app.post("/delete", async function (req, res) {
 let customerId;
 async function addToCart(
   product_idd,
+  product_name,
   price,
   quantity,
   itemID,
@@ -303,6 +304,7 @@ async function addToCart(
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
+  console.log("productName:", product_name);
   console.log("price:", price);
   console.log("quantity:", quantity);
   console.log("itemId:", itemID);
@@ -319,8 +321,8 @@ async function addToCart(
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-        "INSERT INTO Product(product_idd,price,quantity,itemID,sizee,customer_id) VALUES(:product_idd,:price,:quantity,:itemID,:sizee,:customer_id)",
-        [product_idd, price, quantity, itemID, sizee, customerId],
+        "INSERT INTO Product(product_idd,product_name,price,quantity,itemID,sizee,customer_id) VALUES(:product_idd,:product_name,:price,:quantity,:itemID,:sizee,:customer_id)",
+        [product_idd,product_name, price, quantity, itemID, sizee, customerId],
 
         function (err) {
           if (err) {
@@ -383,13 +385,13 @@ async function addToCart(
 app.post("/add-to-cart", async function (req, res) {
   console.log("/add-to-cart route called");
 
-  const product_idd = req.body.product_idd;
+  const product_idd = Math.floor(Math.random() * 1000000);
+  const product_name = req.body.product_name;
   const price = req.body.price;
   const quantity = req.body.quantity;
   const itemID = req.body.itemID;
   const sizee = req.body.sizee;
-
-  //const customerId = req.body.customerId; // or you can use the global variable if you want
+  // const customerId = req.body.customerId;
 
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
@@ -398,12 +400,10 @@ app.post("/add-to-cart", async function (req, res) {
     await updateQuantity(product_idd, quantity);
   } else {
     // add new product to cart
-
-    await addToCart(product_idd, price, quantity, itemID, sizee, customerId);
+    await addToCart(product_idd,product_name, price, quantity, itemID, sizee, customerId);
   }
   res.send({ message: "Product added to cart successfully" });
 });
-
 // //inertion :
 // app.post("/add-to-cart", async function (req, res) {
 //   console.log("/add-to-cart route called");

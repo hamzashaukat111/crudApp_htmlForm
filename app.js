@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Oracle_5",
+      password: "Hamza123",
       connectString: "localhost/orcl",
     });
   }
@@ -90,36 +90,67 @@ app.post("/add", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "INSERT INTO USER_TTT(naam,numberr,Manager_id,Branch_id) VALUES(:naam,:numberr,:Manager_id,:Branch_id)",
-      [
-        req.body.naam,
-        req.body.numberr,
-        req.body.Manager_id,
-        req.body.Branch_id,
-      ],
-      function (err) {
-        if (err) {
-          return console.log(err.message);
-        }
-        console.log("New employee has been added");
-        res.send(
-          "New employee has been added into the database with ID = " +
-            req.body.naam +
-            " and Name = " +
-            req.body.numberr +
-            " " +
-            req.body.Manager_id +
-            " " +
-            req.body.Branch_id
-        );
+      "BEGIN add_user(:naam, :numberr, :Manager_id, :Branch_id); END;",
+      {
+        naam: req.body.naam,
+        numberr: req.body.numberr,
+        Manager_id: req.body.Manager_id,
+        Branch_id: req.body.Branch_id,
       }
     );
 
     connection.commit();
+    console.log("New employee has been added");
+    res.send(
+      "New employee has been added into the database with ID = " +
+        req.body.naam +
+        " and Name = " +
+        req.body.numberr +
+        " " +
+        req.body.Manager_id +
+        " " +
+        req.body.Branch_id
+    );
   } catch (err) {
     console.error(err);
   }
 });
+
+// app.post("/add", async function (req, res) {
+//   const connection = await getConnection();
+
+//   try {
+//     const data = await connection.execute(
+//       "INSERT INTO USER_TTT(naam,numberr,Manager_id,Branch_id) VALUES(:naam,:numberr,:Manager_id,:Branch_id)",
+//       [
+//         req.body.naam,
+//         req.body.numberr,
+//         req.body.Manager_id,
+//         req.body.Branch_id,
+//       ],
+//       function (err) {
+//         if (err) {
+//           return console.log(err.message);
+//         }
+//         console.log("New employee has been added");
+//         res.send(
+//           "New employee has been added into the database with ID = " +
+//             req.body.naam +
+//             " and Name = " +
+//             req.body.numberr +
+//             " " +
+//             req.body.Manager_id +
+//             " " +
+//             req.body.Branch_id
+//         );
+//       }
+//     );
+
+//     connection.commit();
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
 ///////////////////////////////////////////////////////////////////
 
 //after declaring con uper
@@ -253,8 +284,6 @@ app.post("/delete", async function (req, res) {
   }
 });
 
-
-
 let customerId;
 async function addToCart(
   product_idd,
@@ -264,7 +293,6 @@ async function addToCart(
   sizee,
   customerId
 ) {
-
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
@@ -275,7 +303,6 @@ async function addToCart(
 
   console.log("customerId", customerId);
 
-
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
   if (exists) {
@@ -285,7 +312,6 @@ async function addToCart(
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-
         "INSERT INTO Product(product_idd,price,quantity,itemID,sizee,customer_id) VALUES(:product_idd,:price,:quantity,:itemID,:sizee,:customer_id)",
         [product_idd, price, quantity, itemID, sizee, customerId],
 
@@ -307,7 +333,6 @@ async function addToCart(
 
 // async function addToCart(product_idd, price, quantity, itemID,sizee) {
 
-
 //   const connection = await getConnection();
 //   console.log("addToCart function called");
 //   console.log("productId:", product_idd);
@@ -316,7 +341,6 @@ async function addToCart(
 //   console.log("itemId:", itemID);
 
 //   console.log("size", sizee);
-
 
 //   // Check if the product already exists in the cart
 //   const exists = await checkIfProductExists(product_idd);
@@ -349,10 +373,6 @@ async function addToCart(
 //   }
 // }
 
-
-
-
-
 app.post("/add-to-cart", async function (req, res) {
   console.log("/add-to-cart route called");
 
@@ -364,7 +384,6 @@ app.post("/add-to-cart", async function (req, res) {
 
   //const customerId = req.body.customerId; // or you can use the global variable if you want
 
-
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
   if (exists) {
@@ -374,7 +393,6 @@ app.post("/add-to-cart", async function (req, res) {
     // add new product to cart
 
     await addToCart(product_idd, price, quantity, itemID, sizee, customerId);
-
   }
   res.send({ message: "Product added to cart successfully" });
 });
@@ -458,7 +476,6 @@ app.post("/check-out", async function (req, res) {
          (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
           FROM Product)` // Add a closing parenthesis here
     );
-    
 
     console.log("Data retrieved successfully");
     console.log(result.rows);
@@ -527,19 +544,52 @@ app.post("/cancel", async function (req, res) {
 });
 
 //////entering customer details
+// app.post("/loginDetails", async function (req, res) {
+//   const connection = await getConnection();
+
+//   try {
+//     const data = await connection.execute(
+//       "INSERT INTO CUSTOME(Customer_id, Customer_pw, Customer_name, Customer_no, Customer_address) VALUES(:customerId, :customerPassword, :customerName, :customerNumber, :customerAddress)",
+//       [
+//         req.body.customerId,
+//         req.body.customerPassword,
+//         req.body.customerName,
+//         req.body.customerNumber,
+//         req.body.customerAddress,
+//       ],
+//       function (err) {
+//         if (err) {
+//           return console.log(err.message);
+//         }
+//         console.log("New customer has been added");
+//         res.send(
+//           "New customer has been added into the database with ID = " +
+//             req.body.customerId +
+//             " and Name = " +
+//             req.body.customerName
+//         );
+//       }
+//     );
+
+//     connection.commit();
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
+
 app.post("/loginDetails", async function (req, res) {
   const connection = await getConnection();
 
   try {
     const data = await connection.execute(
-      "INSERT INTO CUSTOME(Customer_id, Customer_pw, Customer_name, Customer_no, Customer_address) VALUES(:customerId, :customerPassword, :customerName, :customerNumber, :customerAddress)",
-      [
-        req.body.customerId,
-        req.body.customerPassword,
-        req.body.customerName,
-        req.body.customerNumber,
-        req.body.customerAddress,
-      ],
+      "BEGIN add_customer(:customerId, :customerPassword, :customerName, :customerNumber, :customerAddress); END;",
+      {
+        customerId: req.body.customerId,
+        customerPassword: req.body.customerPassword,
+        customerName: req.body.customerName,
+        customerNumber: req.body.customerNumber,
+        customerAddress: req.body.customerAddress,
+      },
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -559,14 +609,6 @@ app.post("/loginDetails", async function (req, res) {
     console.error(err);
   }
 });
-
-
-
-
-
-
-
-
 
 //let customerId;
 
@@ -617,7 +659,6 @@ app.post("/login", async function (req, res) {
 //   }
 // });
 
-
 ///RECEIPT VIEW:
 
 app.post("/receipt", async function (req, res) {
@@ -628,7 +669,6 @@ app.post("/receipt", async function (req, res) {
     const result = await connection.execute(
       `SELECT * FROM v_cart_receiipptt` // Add a closing parenthesis here
     );
-    
 
     console.log("Data retrieved successfully");
     console.log(result.rows);
@@ -687,8 +727,6 @@ app.post("/receipt", async function (req, res) {
     console.error(err);
   }
 });
-
-
 
 // Closing the database connection.
 app.get("/close", function (req, res) {

@@ -15,7 +15,7 @@ async function getConnection() {
   if (!con) {
     con = await oracledb.getConnection({
       user: "system",
-      password: "Hamza123",
+      password: "Oracle_5",
       connectString: "localhost/orcl",
     });
   }
@@ -90,12 +90,14 @@ app.post("/add", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "BEGIN add_user(:naam, :numberr, :Manager_id, :Branch_id); END;",
+      "BEGIN add_employee(:Emp_id, :Emp_name, :Emp_no, :Emp_email, :Manager_id, :Branch_id); END;",
       {
-        naam: req.body.naam,
-        numberr: req.body.numberr,
+        Emp_id: req.body.Emp_id,
+        Emp_name: req.body.Emp_name,
+        Emp_no: req.body.Emp_no,
+        Emp_email: req.body.Emp_email,
         Manager_id: req.body.Manager_id,
-        Branch_id: req.body.Branch_id,
+        Branch_id: req.body.Branch_id
       }
     );
 
@@ -103,9 +105,13 @@ app.post("/add", async function (req, res) {
     console.log("New employee has been added");
     res.send(
       "New employee has been added into the database with ID = " +
-        req.body.naam +
+        req.body.Emp_id +
         " and Name = " +
-        req.body.numberr +
+        req.body.Emp_name +
+        " " +
+        req.body.Emp_no +
+        " " +
+        req.body.Emp_email+
         " " +
         req.body.Manager_id +
         " " +
@@ -159,8 +165,8 @@ app.post("/view", async function (req, res) {
 
   try {
     const result = await connection.execute(
-      `SELECT  *FROM USER_TTT WHERE naam = :naam`,
-      { naam: req.body.naam }
+      `SELECT  *FROM Employee WHERE Emp_id = :Emp_id`,
+      { Emp_id: req.body.Emp_id }
     );
     console.log("Entry displayed successfully");
     console.log(result);
@@ -175,21 +181,22 @@ app.post("/view", async function (req, res) {
        <head> <link rel="stylesheet" href="table.css" /> </head>
        <body>
 <div class="table-title">
-<h3>Data Table</h3>
+<h3>Employee Detail</h3>
 </div>
 <table class="table-fill">
 <thead>
 <tr>
 <th class="text-left">ID</th>
-<th class="text-left">Employee</th>
+<th class="text-left">NAME</th>
 <th class="text-left">MANAGER</th>
 <th class="text-left">BRANCH</th>
 </tr>
 </thead>
 <tbody class="table-hover">
 <tr>
-<td class="text-left">${result.rows[0].NAAM}</td>
-<td class="text-left">${result.rows[0].NUMBERR}</td>
+        
+<td class="text-left">${result.rows[0].EMP_ID}</td>
+<td class="text-left">${result.rows[0].EMP_NAME}</td>
 <td class="text-left">${result.rows[0].MANAGER_ID}</td>
 <td class="text-left">${result.rows[0].BRANCH_ID}</td>
 </tr>
@@ -220,13 +227,13 @@ app.post("/view", async function (req, res) {
       //this uper wala can be used inside html
     } else {
       res.send(
-        `No record with name = ${req.body.naam} was found in the database`
+        `No record with name = ${req.body.Emp_id} was found in the database`
       );
     }
   } catch (err) {
     console.error(err);
     res.send(
-      `Error encountered while retrieving= ${req.body.naam} data from the database`
+      `Error encountered while retrieving= ${req.body.Emp_id} data from the database`
     );
   }
 });
@@ -238,8 +245,8 @@ app.post("/update", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "UPDATE USER_TTT SET numberr = :numberr WHERE naam = :naam",
-      [req.body.numberr, req.body.naam],
+      "UPDATE Employee SET Emp_name = :Emp_name WHERE Emp_id = :Emp_id",
+      [req.body.Emp_name, req.body.Emp_id],
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -263,8 +270,8 @@ app.post("/delete", async function (req, res) {
 
   try {
     const data = await connection.execute(
-      "DELETE FROM USER_TTT WHERE naam = :naam ",
-      { naam: req.body.naam },
+      "DELETE FROM Employee WHERE Emp_id = :Emp_id ",
+      { Emp_id: req.body.Emp_id },
       function (err) {
         if (err) {
           return console.log(err.message);
@@ -272,7 +279,7 @@ app.post("/delete", async function (req, res) {
         console.log("Record deleted");
         res.send(
           "Record with name = " +
-            req.body.naam +
+            req.body.Emp_id +
             " has been deleted from the database"
         );
       }
@@ -470,12 +477,25 @@ app.post("/check-out", async function (req, res) {
 
   try {
     const result = await connection.execute(
-      `(SELECT product_idd, quantity, price,sizee, quantity * price AS total_price
-          FROM Product)
-         UNION ALL
-         (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
-          FROM Product)` // Add a closing parenthesis here
+      `(SELECT product_idd, quantity, price, sizee, quantity * price AS total_price
+        FROM Product
+        WHERE customer_id =:customerId )
+       UNION ALL
+       (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
+        FROM Product
+        WHERE customer_id = :customerId)`,
+      { customerId: customerId }
     );
+
+    // const result = await connection.execute(
+    //   `(SELECT product_idd, quantity, price, sizee, quantity * price AS total_price
+    //     FROM Product
+    //     WHERE customer_id =:customerId )
+    //    UNION ALL
+    //    (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
+    //     FROM Product
+    //     WHERE customer_id = :customerId)` // Add a closing parenthesis here
+    // );
 
     console.log("Data retrieved successfully");
     console.log(result.rows);

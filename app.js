@@ -284,7 +284,6 @@ app.post("/delete", async function (req, res) {
   }
 });
 
-
 let customerId;
 async function addToCart(
   product_idd,
@@ -294,7 +293,6 @@ async function addToCart(
   sizee,
   customerId
 ) {
-
   const connection = await getConnection();
   console.log("addToCart function called");
   console.log("productId:", product_idd);
@@ -305,7 +303,6 @@ async function addToCart(
 
   console.log("customerId", customerId);
 
-
   // Check if the product already exists in the cart
   const exists = await checkIfProductExists(product_idd);
   if (exists) {
@@ -315,7 +312,6 @@ async function addToCart(
     // Insert a new row into the cart table
     try {
       const data = await connection.execute(
-
         "INSERT INTO Product(product_idd,price,quantity,itemID,sizee,customer_id) VALUES(:product_idd,:price,:quantity,:itemID,:sizee,:customer_id)",
         [product_idd, price, quantity, itemID, sizee, customerId],
 
@@ -337,7 +333,6 @@ async function addToCart(
 
 // async function addToCart(product_idd, price, quantity, itemID,sizee) {
 
-
 //   const connection = await getConnection();
 //   console.log("addToCart function called");
 //   console.log("productId:", product_idd);
@@ -346,7 +341,6 @@ async function addToCart(
 //   console.log("itemId:", itemID);
 
 //   console.log("size", sizee);
-
 
 //   // Check if the product already exists in the cart
 //   const exists = await checkIfProductExists(product_idd);
@@ -379,7 +373,6 @@ async function addToCart(
 //   }
 // }
 
-
 app.post("/add-to-cart", async function (req, res) {
   console.log("/add-to-cart route called");
 
@@ -391,7 +384,6 @@ app.post("/add-to-cart", async function (req, res) {
 
   //const customerId = req.body.customerId; // or you can use the global variable if you want
 
-
   // check if product already exists in cart
   const exists = await checkIfProductExists(product_idd);
   if (exists) {
@@ -401,7 +393,6 @@ app.post("/add-to-cart", async function (req, res) {
     // add new product to cart
 
     await addToCart(product_idd, price, quantity, itemID, sizee, customerId);
-
   }
   res.send({ message: "Product added to cart successfully" });
 });
@@ -485,7 +476,6 @@ app.post("/check-out", async function (req, res) {
          (SELECT NULL AS product_idd, NULL AS quantity, NULL AS price, NULL AS sizee, SUM(quantity * price) AS total_price
           FROM Product)` // Add a closing parenthesis here
     );
-
 
     console.log("Data retrieved successfully");
     console.log(result.rows);
@@ -622,7 +612,6 @@ app.post("/loginDetails", async function (req, res) {
 
 //let customerId;
 
-
 ////login
 app.post("/login", async function (req, res) {
   const connection = await getConnection();
@@ -670,7 +659,6 @@ app.post("/login", async function (req, res) {
 //   }
 // });
 
-
 ///RECEIPT VIEW:
 
 app.post("/receipt", async function (req, res) {
@@ -681,7 +669,6 @@ app.post("/receipt", async function (req, res) {
     const result = await connection.execute(
       `SELECT * FROM v_cart_receiipptt` // Add a closing parenthesis here
     );
-
 
     console.log("Data retrieved successfully");
     console.log(result.rows);
@@ -740,7 +727,6 @@ app.post("/receipt", async function (req, res) {
     console.error(err);
   }
 });
-
 
 // Closing the database connection.
 app.get("/close", function (req, res) {

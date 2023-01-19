@@ -1,127 +1,106 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap");
 
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap');
-.bgimg{
-    
-    background-image: url('bgimg.png');
-     background-size: cover;
-     background-attachment: fixed;
-     width: 100%;
-     height: 660px;
+/* * {
+  border: 0.5px solid black;
+} */
+/*betterTo understand boxes*/
 
-     /* <img
+.bgimg {
+  background-image: url("bgimg.png");
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
+  height: 660px;
+
+  /* <img
      src="images\download.png"
      alt="Check URL"
      width="100px"
      height="100px"
    /> */
+}
+.headerset {
+  padding-top: 200px;
+}
+.headerset h1 {
+  font-weight: bold;
+}
+.nav-link {
+  list-style: none;
+  display: inline-block;
+  margin-bottom: 15px;
 
-     
- }
- .headerset{
-   padding-top: 200px;
-     
- }
- .headerset h1{
-     font-weight: bold;
-     
- }
- .nav-link{
-     list-style: none;
-     display: inline-block;
-     margin-bottom: 15px;
-    
-     position: relative;
-      
- }
- 
- .nav-link::after{
-     content: '';
-     width: 0%;
-     height: 1px;
-     background:#f1f3f3;
-     position: absolute;
-     left: 0px;
-     bottom: -8px; 
-     transition: 0.5s;
-     
- }
- .nav-link:hover::after{
-     width: 100%;
- 
- }
- .services{
-     padding: 100px 0px 60px;
+  position: relative;
+}
 
-     background-color:azure;
+.nav-link::after {
+  content: "";
+  width: 0%;
+  height: 1px;
+  background: #f1f3f3;
+  position: absolute;
+  left: 0px;
+  bottom: -8px;
+  transition: 0.5s;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.services {
+  padding: 100px 0px 60px;
 
-     height: 700px;
- }
- .services h1{
-     
-     font-weight: bold;
-     
- }
- .iconset{
-     
-    color:cadetblue;
-    
- }
- .r1-set p{
-     color:dimgrey;
- }
- .portfolio{
-     
-     background-color: aliceblue;
-     height: 1300px;
- }
- .card{
-     
-     margin-top: 40px;
- }
- 
- 
- .img2{
-     
-      width: 100%;
-     height: 19vw;
-     object-fit: cover;
- 
- 
- }
- .ourteam{
-     
-     height: 900px;
- }
- .r2 p{
-     color:darkgreen;
-     
- }
- .r2 h4{
-     font-weight: bold;
-     color: darkgreen;
- }
- .imm{
-     
-       width: 100%;
-     height: 19vw;
-     object-fit: cover;
- }
- .ourteam{
-     
-  padding-top: 50px;   
-     
- }
- .container{
-    font-family: 'Quicksand'; 
- }
- h4{
-    color: rgb(5, 5, 5);
-    font-weight: bold;
+  background-color: azure;
 
- }
- .icon-img{
-    width: 60px;
-    height: 60px;
-  }
-  
+  height: 700px;
+}
+.services h1 {
+  font-weight: bold;
+}
+.iconset {
+  color: cadetblue;
+}
+.r1-set p {
+  color: dimgrey;
+}
+.portfolio {
+  background-color: aliceblue;
+  height: 1300px;
+}
+.card {
+  margin-top: 40px;
+}
 
+.img2 {
+  width: 100%;
+  height: 19vw;
+  object-fit: cover;
+}
+.ourteam {
+  height: 900px;
+}
+.r2 p {
+  color: darkgreen;
+}
+.r2 h4 {
+  font-weight: bold;
+  color: darkgreen;
+}
+.imm {
+  width: 100%;
+  height: 19vw;
+  object-fit: cover;
+}
+.ourteam {
+  padding-top: 50px;
+}
+.container {
+  font-family: "Quicksand";
+}
+h4 {
+  color: rgb(5, 5, 5);
+  font-weight: bold;
+}
+.icon-img {
+  width: 60px;
+  height: 60px;
+}

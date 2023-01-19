@@ -5,7 +5,7 @@
       rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
        crossorigin="anonymous">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="s2.css" type="text/css">
     
     
@@ -28,9 +28,9 @@
           <div class="collapse navbar-collapse justify-content-end "
            id="navbarNavAltMarkup">
             <div class="navbar-nav  justify-items-stretch ">
-              <a class="nav-link active" aria-current="page" href="login1.html">LOGIN</a>
+              <a class="nav-link active" aria-current="page" href="login1.html">LOG OUT</a>
               <a class="nav-link" href="itemCatalog.html">ITEM CATALOG</a>
-              <a class="nav-link" href="\public\form.html" target="_self">EMPLOYEE</a>
+              <a class="nav-link" href="login2.html" target="_self">EMPLOYEE</a>
               <a class="nav-link" href="index.html" target="_self">HOME</a>
               <a class="nav-link" href="aboutUs.html" tabindex="-1"
                aria-disabled="true">ABOUT US</a>
@@ -99,7 +99,7 @@
 <br><br>
 
               <!-- <button class="fill">Fill In</button> -->
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
           </center>
         </jacket>
@@ -123,10 +123,11 @@
            
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="2" />
+              <input type="hidden" name="product_name" value="HOODIE" />
               <input type="hidden" name="price" value="2500" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="2" />
+              <input type="hidden" name="itemID" value="HOODIE" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -137,7 +138,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
 
           </center>
@@ -163,10 +164,11 @@
             Price = 3500<br />
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="product_name" value="JACKET" />
               <input type="hidden" name="price" value="3500" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="4" />
+              <input type="hidden" name="itemID" value="JACKET" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -177,7 +179,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
             
           </center>
@@ -210,10 +212,11 @@
             Price = 2000<br />
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="product_name" value="SUIT" />
               <input type="hidden" name="price" value="2000" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="4" />
+              <input type="hidden" name="itemID" value="SUIT" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -224,7 +227,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
             
           </center>
@@ -248,10 +251,11 @@
             Price = 2000<br />
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="product_name" value="W_COAT" />
               <input type="hidden" name="price" value="2000" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="4" />
+              <input type="hidden" name="itemID" value="W_COAT" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -262,7 +266,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
             
           </center>
@@ -294,10 +298,11 @@
             Price = 2000<br />
             <form action="/add-to-cart" method="POST">
               <input type="hidden" name="product_idd" value="4" />
+              <input type="hidden" name="product_name" value="WHITE_SK" />
               <input type="hidden" name="price" value="2000" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="4" />
+              <input type="hidden" name="itemID" value="WHITE_SK" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -308,7 +313,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
             
           </center>
@@ -334,10 +339,11 @@
             <form action="/add-to-cart" method="POST">
               <!-- product information and "Add to Cart" button go here -->
               <input type="hidden" name="product_idd" value="3" />
+              <input type="hidden" name="product_name" value="BLUE_SK" />
               <input type="hidden" name="price" value="3000" />
               <label id="label">Quantity</label>
               <input id="quantity" type="text" name="quantity" size="10" />
-              <input type="hidden" name="itemID" value="3" />
+              <input type="hidden" name="itemID" value="BLUE_SK" />
               <label for="size-chart">size:</label>
               <select name="sizee" id="size-chart">
                 <!-- <option value="XS">E</option> -->
@@ -348,7 +354,7 @@
               </select>
               
               <br><br>
-              <button class="btn" type="submit">Add to Cart</button>
+              <button class="btn btn-primary btn-outline-light mt-2" type="submit">Add to Cart</button>
             </form>
 
           </center>
@@ -356,17 +362,98 @@
       
       </categories2> 
       <br>
+      <br>
+      <br>
+
+      <div class="container">
+        <div class="row">
+
+        <div class="col-lg-4 align-items-center">
+  <form action="/check-out" method="POST">
+    <button class="btn btn-dark btn-outline-light btn-lg mt-2">checkout</button>
+  </form></div>
+  <div class="col-4">
+  <form action="/cancel" method="POST">
+    <button class="btn btn btn-dark btn-outline-light btn-lg mt-2">cancel</button>
+  </form></div>
+
+  <div class="col-4">
+  <form action="/receipt" method="POST">
+    <button class="btn btn btn-dark btn-outline-light btn-lg mt-2">Generate Receipt</button>
+  </form></div></div>
+</div>
+      <section id="pricing" class="bg-light mt-5">
+        <div class="container-lg">
+          <div class="text-center">
+            <h2>PRODUCTS COMING</h2>
+            <p class="lead text-muted">SOON</p>
+          </div>
+           
+          <div class="row my-5 align-items-center justify-content-center g-0">
+       
+       
+           <div class="col-8 col-lg-3">
+          <div class="card border-0 mb-3" >
+          <!-- style="max-width: 18rem;"> -->
+           <div class="card-header"></div>
+           <div class="card-body text-dark text-center py-4">
+             <!-- <h5 class="card-title">Starter Edition</h5>
+             <p class="lead card-subtitle">E-book only</p> -->
+             <p class="display-5 my-5 text-primary fw-bold">Designer Jeans</p>
+       
+             <p class="card-text mx-5 text-muted d-none d-lg-block ">
+               These premium jeans will be directly imported from Italy</p>
+                <!-- <a href="#" class="btn btn-outline-primary btn-lg mt-3">Buy Now</a> -->
+       
+           </div>
+         </div></div>
+       
+         <div class="col-9 col-lg-4">
+         <div class="card border-primary mb-3">
+           <div class="card-header"></div>
+           <div class="card-body text-dark text-center py-4">
+             <!-- <h5 class="card-title">Popular Edition</h5>
+             <p class="lead card-subtitle">More Gadgets Available</p> -->
+             <p class="display-5 my-5 text-primary fw-bold">PREMIUM HOODIES</p>
+             <p class="card-text mx-5 text-muted d-none d-lg-block">Wear premium hoodies that UET students deserves</p>
+             <!-- <a href="#" class="btn btn-outline-primary btn-lg mt-3">Buy Now</a> -->
+           </div>
+         </div></div>
+       
+         <div class="col-8 col-lg-3">
+         <div class="card border-0 mb-3" >
+         <!-- style="max-width: 18rem;" -->
+         
+           <div class="card-header"></div>
+           <div class="card-body text-dark text-center py-4">
+             <!-- <h5 class="card-title">Super Edition</h5>
+             <p class="lead card-subtitle">Save 40% with this 3-Months Plan</p> -->
+             <p class="display-5 my-5 text-primary fw-bold">Leather Jackets</p>
+             <p class="card-text mx-5 text-muted d-none d-lg-block">Leather Jacket made from animal skin imported frrom Russia.  COMING SOON </p>
+             <!-- <a href="#" class="btn btn-outline-primary btn-lg mt-3">Buy Now</a> -->
+       
+           </div> </div></div>
+       
+       
+        </div>  
+           </section>
+
+           <!-- <div class="container">
+
+            <div class="col-lg-4 align-items-center">
       <form action="/check-out" method="POST">
-        <button class="btn1">checkout</button>
-      </form>
+        <button class="btn btn-dark btn-outline-light btn-lg mt-2">checkout</button>
+      </form></div>
+      <div class="col-8">
       <form action="/cancel" method="POST">
-        <button class="btn1">cancel</button>
-      </form>
+        <button class="btn btn btn-dark btn-outline-light btn-lg mt-2">cancel</button>
+      </form></div>
 
+      <div class="col-auto">
       <form action="/receipt" method="POST">
-        <button class="btn1">Generate Receipt</button>
-      </form>
-
+        <button class="btn btn btn-dark btn-outline-light btn-lg mt-2">Generate Receipt</button>
+      </form></div>
+</div> -->
     </main>
   </body>
 </html>

@@ -10,8 +10,8 @@
   <body>
     <div class="login-page" action="#!">
       <div class="form">
-        <form class="login-form" action="/login" method="POST">
-          <h2 class="loginTitle">Login</h2>
+        <form class="login-form" action="/login2" method="POST">
+          <h2 class="loginTitle">EMPLOYEE Login</h2>
           <!-- <input id="email" type="email" placeholder="Email" reqiured /> -->
           <input
             id="id"
@@ -68,47 +68,9 @@
               </path>
             </svg>
           </button>
-          <p class="message">
-            Not registered? <a href="customer.html">Create an account</a>
-          </p>
-          <p class="message">
-            Employee? <a href="login2.html">Login as Employee</a>
-          </p>
+          <p class="message">Only Outfitters Employee have access</p>
         </form>
       </div>
     </div>
-
-    <!-- <script>// this is something i found ke login button press to index.html wali file khule, but doesnot work
-        // Get a reference to the login form
-        const loginForm = document.getElementById('login-form');
-  
-        // Add an event listener to the login form
-        loginForm.addEventListener('button', function(event) {
-          event.preventDefault(); // Prevent the form from submitting
-  
-          // Get the username and password entered by the user
-          const username = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-  
-          // Validate the login credentials
-          if (username === 'mah@gmail.com' && password === 'password') {
-            // If the login credentials are valid, redirect the user to the main index.html file
-            window.location.replace('index.html');
-          } else {
-            // If the login credentials are invalid, display an error message
-            alert('Invalid login credentials');
-          }
-        });
-      </script> -->
-
-    <!-- <script>
-  function formdata() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            console.log(email)
-            console.log(password)
-        }
-        
-    </script> -->
   </body>
 </html>
